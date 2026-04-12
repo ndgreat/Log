@@ -5,15 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#080810">
+<meta name="apple-mobile-web-app-title" content="LOG">
 <title>LOG</title>
+
+<!-- PWA Manifest inline -->
+<script>
+const manifestData = {
+  name: "LOG — Lifetracker",
+  short_name: "LOG",
+  description: "Personlig lifetracker",
+  start_url: "./",
+  display: "standalone",
+  background_color: "#080810",
+  theme_color: "#080810",
+  orientation: "portrait",
+  icons: [
+    { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%23080810'/><text x='96' y='140' font-size='110' text-anchor='middle' fill='%237fefbd' font-family='serif' font-weight='900'>L</text></svg>", sizes: "192x192", type: "image/svg+xml" },
+    { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='96' fill='%23080810'/><text x='256' y='370' font-size='300' text-anchor='middle' fill='%237fefbd' font-family='serif' font-weight='900'>L</text></svg>", sizes: "512x512", type: "image/svg+xml" }
+  ]
+};
+const blob = new Blob([JSON.stringify(manifestData)], {type: 'application/json'});
+const manifestURL = URL.createObjectURL(blob);
+document.write('<link rel="manifest" href="' + manifestURL + '">');
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root {
   --bg:#080810;--surface:#10101c;--surface2:#18182a;--surface3:#20203a;
   --border:#2a2a45;--accent:#7fefbd;--accent-dim:rgba(127,239,189,0.12);
-  --accent2:#ff6b6b;--accent3:#ffd166;--accent4:#8b9cf4;
+  --accent2:#ff6b6b;--accent3:#ffd166;--accent4:#8b9cf4;--accent5:#ff9a3c;
   --text:#e8e8f4;--muted:#5a5a7a;--muted2:#8080a0;
   --font-d:'Syne',sans-serif;--font-m:'DM Mono',monospace;
   --r:14px;--r-sm:10px;
@@ -23,7 +48,8 @@ html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:var(--font-m);font-size:14px;display:flex;flex-direction:column}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9000}
 
-.app-header{flex-shrink:0;background:rgba(8,8,16,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;z-index:50}
+/* HEADER */
+.app-header{flex-shrink:0;background:rgba(8,8,16,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;z-index:50}
 .logo{font-family:var(--font-d);font-weight:800;font-size:20px;letter-spacing:-.5px;color:var(--accent)}
 .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .header-date{font-size:11px;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase}
@@ -31,11 +57,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .score-status.done{color:var(--accent)}
 .score-status.pending{color:var(--accent3)}
 
+/* MAIN */
 .main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .view{display:none;padding:18px 18px 20px;animation:fadeUp .22s ease}
 .view.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
+/* NAV */
 .bottom-nav{flex-shrink:0;background:rgba(8,8,16,.97);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:50}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:none;border:none;color:var(--muted);font-family:var(--font-m);font-size:9px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:color .18s;position:relative}
 .nav-btn.active{color:var(--accent)}
@@ -46,7 +74,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .sec-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:22px}
 .sec-label:first-child{margin-top:0}
 
-/* Score card */
+/* SCORE CARD */
 .today-score-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:6px;cursor:pointer}
 .today-score-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
 .today-score-title{font-family:var(--font-d);font-weight:700;font-size:15px}
@@ -58,15 +86,28 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .score-mini-chip{background:var(--surface2);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--muted2);display:flex;align-items:center;gap:5px}
 .score-mini-val{color:var(--accent);font-weight:500}
 
+/* CIGARETTE COUNTER */
+.cig-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:6px}
+.cig-left{display:flex;align-items:center;gap:10px}
+.cig-icon{font-size:18px;line-height:1}
+.cig-info{}
+.cig-label{font-family:var(--font-d);font-size:13px;font-weight:600;color:var(--text)}
+.cig-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.cig-right{display:flex;align-items:center;gap:10px}
+.cig-count{font-family:var(--font-d);font-size:26px;font-weight:800;color:var(--accent5);line-height:1;min-width:32px;text-align:center}
+.cig-btn{background:var(--accent5);border:none;border-radius:50%;width:36px;height:36px;color:var(--bg);font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity .15s,transform .1s;flex-shrink:0}
+.cig-btn:active{opacity:.8;transform:scale(.9)}
+
 /* FAB */
 .fab{width:100%;background:var(--surface);border:1px dashed var(--border);border-radius:var(--r);padding:13px;color:var(--muted2);font-family:var(--font-m);font-size:13px;cursor:pointer;transition:all .15s;text-align:left;display:flex;align-items:center;gap:10px;margin-bottom:4px}
 .fab:active{background:var(--surface2);border-color:var(--accent);color:var(--accent)}
 .fab svg{width:16px;height:16px;stroke-width:1.8;flex-shrink:0}
 
-/* Entry card */
-.entry-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;animation:fadeUp .18s ease;position:relative}
+/* ENTRY CARD */
+.entry-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;animation:fadeUp .18s ease}
 .entry-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.entry-time{font-size:11px;color:var(--accent4);letter-spacing:.06em}
+.entry-time{font-size:11px;color:var(--accent4);letter-spacing:.06em;cursor:pointer;border-bottom:1px dashed var(--border);padding-bottom:1px}
+.entry-time:active{color:var(--accent)}
 .entry-actions{display:flex;gap:8px}
 .entry-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 4px;border-radius:4px;line-height:1;transition:color .15s}
 .entry-btn:active{color:var(--accent)}
@@ -74,7 +115,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .entry-text{color:var(--text);line-height:1.65;font-size:13px;white-space:pre-wrap;word-break:break-word}
 .empty-day{text-align:center;padding:32px 16px;color:var(--muted);font-size:12px;line-height:2;border:1px dashed var(--border);border-radius:var(--r);margin-top:8px}
 
-/* Modals */
+/* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;backdrop-filter:blur(6px);align-items:flex-end}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-height:92vh;overflow-y:auto;padding:0 0 40px;animation:slideUp .28s cubic-bezier(.34,1.4,.64,1)}
@@ -82,10 +123,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:14px auto 0}
 .modal-head{padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between}
 .modal-title{font-family:var(--font-d);font-weight:700;font-size:17px}
-.modal-close{background:var(--surface2);border:none;color:var(--muted2);width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.modal-close{background:var(--surface2);border:none;color:var(--muted2);width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .modal-body{padding:16px 20px 0}
 
-/* Score items */
+/* SCORE ITEMS */
 .score-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:10px}
 .score-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .score-item-name{font-family:var(--font-d);font-size:13px;font-weight:600;color:var(--text)}
@@ -94,26 +135,33 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .slider-wrap{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .slider-min,.slider-max{font-size:10px;color:var(--muted);width:12px;text-align:center;flex-shrink:0}
 input[type="range"]{flex:1;-webkit-appearance:none;appearance:none;height:3px;background:var(--border);border-radius:2px;outline:none}
-input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 0 4px rgba(127,239,189,.15);transition:box-shadow .15s}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 0 0 4px rgba(127,239,189,.15)}
 input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,239,189,.25)}
 .score-note-input{width:100%;background:var(--surface3);border:1px solid transparent;border-radius:8px;padding:8px 10px;color:var(--muted2);font-family:var(--font-m);font-size:12px;line-height:1.5;resize:none;outline:none;transition:border-color .2s,color .2s;min-height:38px;max-height:80px}
 .score-note-input:focus{border-color:var(--border);color:var(--text)}
 .score-note-input::placeholder{color:var(--muted);font-style:italic}
 
+/* FORM ELEMENTS */
 .entry-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font-family:var(--font-m);font-size:14px;line-height:1.65;resize:none;min-height:120px;outline:none;transition:border-color .2s}
 .entry-textarea:focus{border-color:var(--accent)}
+.form-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;margin-top:14px}
+.form-label:first-child{margin-top:0}
+input[type="datetime-local"],input[type="time"]{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;color:var(--text);font-family:var(--font-m);font-size:13px;outline:none;width:100%;transition:border-color .2s}
+input[type="datetime-local"]:focus,input[type="time"]:focus{border-color:var(--accent)}
 
 .btn-row{display:flex;gap:10px;margin-top:20px}
 .btn-cancel{flex:1;background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);padding:13px;color:var(--muted2);font-family:var(--font-m);font-size:13px;cursor:pointer}
 .btn-primary{flex:2;background:var(--accent);border:none;border-radius:var(--r-sm);padding:13px;color:var(--bg);font-family:var(--font-d);font-weight:700;font-size:14px;cursor:pointer;transition:opacity .15s,transform .1s}
 .btn-primary:active{opacity:.85;transform:scale(.98)}
 
-/* History */
+/* HISTORY */
 .day-group{margin-bottom:28px}
 .day-header{display:flex;align-items:baseline;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:12px}
 .day-name{font-family:var(--font-d);font-weight:700;font-size:15px;text-transform:capitalize}
 .day-meta{font-size:11px;color:var(--muted)}
-.history-scores{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px}
+.history-scores{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;position:relative}
+.history-edit-btn{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 6px;border-radius:4px;font-family:var(--font-m)}
+.history-edit-btn:active{color:var(--accent)}
 .history-score-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
 .history-score-row{display:flex;align-items:center;justify-content:space-between;font-size:12px}
 .history-score-name{color:var(--muted2)}
@@ -121,8 +169,9 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
 .history-score-val.zero{color:var(--muted)}
 .history-score-note{margin-top:4px;font-size:11px;color:var(--muted);font-style:italic;padding-left:4px;border-left:2px solid var(--border);line-height:1.5;grid-column:1/-1}
 .history-avg{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent);margin-bottom:8px}
+.history-cig{display:inline-flex;align-items:center;gap:5px;background:rgba(255,154,60,.1);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent5);margin-bottom:8px;margin-left:6px}
 
-/* Stats */
+/* STATS */
 .stats-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
 .stats-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .line-chart{position:relative;height:90px;margin-bottom:8px}
@@ -143,13 +192,12 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
 .streak-num{font-family:var(--font-d);font-size:28px;font-weight:800;color:var(--accent);line-height:1}
 .streak-label{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:.06em;text-transform:uppercase}
 
-/* Settings */
+/* SETTINGS */
 .setting-section{margin-bottom:28px}
 .setting-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border)}
 .setting-row:last-child{border-bottom:none}
 .setting-label{font-size:13px;color:var(--text)}
 .setting-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.time-input{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--accent);font-family:var(--font-m);font-size:14px;font-weight:500;outline:none;width:100px;text-align:center}
 .notif-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 14px;color:var(--muted2);font-family:var(--font-m);font-size:12px;cursor:pointer;transition:all .15s}
 .notif-btn.granted{border-color:var(--accent);color:var(--accent)}
 .notif-btn.denied{border-color:var(--accent2);color:var(--accent2)}
@@ -159,6 +207,10 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
 .install-banner.show{display:block}
 .install-title{font-family:var(--font-d);font-size:13px;font-weight:700;margin-bottom:4px;color:var(--accent3)}
 .install-sub{font-size:11px;color:var(--muted2);line-height:1.6}
+
+/* CIG TIMESTAMPS */
+.cig-times{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.cig-time-chip{font-size:10px;color:var(--muted);background:var(--surface2);border-radius:12px;padding:2px 8px}
 </style>
 </head>
 <body>
@@ -172,8 +224,11 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
 </header>
 
 <main class="main" id="main">
+
+  <!-- TODAY -->
   <div class="view active" id="view-today">
     <div id="todayScoreCard"></div>
+    <div id="cigCounter"></div>
     <div class="sec-label">Entries i dag</div>
     <button class="fab" onclick="openEntryModal()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -182,24 +237,27 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
     <div id="todayEntries"></div>
   </div>
 
+  <!-- HISTORY -->
   <div class="view" id="view-history">
     <div id="historyList"></div>
   </div>
 
+  <!-- STATS -->
   <div class="view" id="view-stats">
     <div id="statsContent"></div>
   </div>
 
+  <!-- SETTINGS -->
   <div class="view" id="view-settings">
     <div class="install-banner" id="installBanner">
       <div class="install-title">📲 Installér som app</div>
-      <div class="install-sub">For notifikationer skal LOG installeres på hjemskærmen. Tryk på de tre prikker i Chrome → "Føj til startskærm".</div>
+      <div class="install-sub">Åbn i Chrome → tre prikker → "Føj til startskærm" for fuld PWA-oplevelse uden adresselinje.</div>
     </div>
     <div class="setting-section">
       <div class="sec-label" style="margin-top:0">Notifikationer</div>
       <div class="setting-row">
         <div><div class="setting-label">Påmindelsestidspunkt</div><div class="setting-sub">Hvornår vil du mindes om din score?</div></div>
-        <input type="time" class="time-input" id="notifTime" value="21:00" onchange="saveNotifTime()">
+        <input type="time" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 12px;color:var(--accent);font-family:var(--font-m);font-size:14px;font-weight:500;outline:none;width:100px;text-align:center" id="notifTime" value="21:00" onchange="saveNotifTime()">
       </div>
       <div class="setting-row">
         <div><div class="setting-label">Tilladelse</div><div class="setting-sub" id="notifStatusText">Ikke aktiveret</div></div>
@@ -222,6 +280,7 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
       </div>
     </div>
   </div>
+
 </main>
 
 <nav class="bottom-nav">
@@ -249,7 +308,7 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-head">
-      <div class="modal-title">Dagens score</div>
+      <div class="modal-title" id="scoreModalTitle">Dagens score</div>
       <button class="modal-close" onclick="closeScoreModal()">×</button>
     </div>
     <div class="modal-body">
@@ -271,6 +330,9 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
       <button class="modal-close" onclick="closeEntryModal()">×</button>
     </div>
     <div class="modal-body">
+      <label class="form-label">Tidspunkt</label>
+      <input type="datetime-local" id="entryTimeInput">
+      <label class="form-label" style="margin-top:14px">Note</label>
       <textarea class="entry-textarea" id="entryTextarea" placeholder="Hvad sker der..."></textarea>
       <div class="btn-row">
         <button class="btn-cancel" onclick="closeEntryModal()">Annuller</button>
@@ -283,70 +345,81 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
 <script>
 const PARAMS=['Baba','Kæreste','Norstat','Trading','Træning','Hus','Mental session'];
 
-let entries=JSON.parse(localStorage.getItem('log_entries')||'[]');
-let scores=JSON.parse(localStorage.getItem('log_scores')||'{}');
-let notifTime=localStorage.getItem('log_notif_time')||'21:00';
-let editingEntryId=null;
-let notifInterval=null;
+let entries  = JSON.parse(localStorage.getItem('log_entries')  || '[]');
+let scores   = JSON.parse(localStorage.getItem('log_scores')   || '{}');
+let cigs     = JSON.parse(localStorage.getItem('log_cigs')     || '{}'); // {dateKey: [iso, iso, ...]}
+let notifTime= localStorage.getItem('log_notif_time') || '21:00';
+let editingEntryId = null;
+let editingScoreDate = null;
+let notifInterval = null;
 
-function persist(){
-  localStorage.setItem('log_entries',JSON.stringify(entries));
-  localStorage.setItem('log_scores',JSON.stringify(scores));
-  localStorage.setItem('log_notif_time',notifTime);
+function persist() {
+  localStorage.setItem('log_entries',  JSON.stringify(entries));
+  localStorage.setItem('log_scores',   JSON.stringify(scores));
+  localStorage.setItem('log_cigs',     JSON.stringify(cigs));
+  localStorage.setItem('log_notif_time', notifTime);
 }
 
-function todayKey(){return new Date().toISOString().slice(0,10)}
-function fmtTime(iso){return new Date(iso).toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'})}
-function fmtDate(ds){return new Date(ds+'T12:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'})}
-function isToday(iso){return iso.slice(0,10)===todayKey()}
-function escH(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function todayKey() { return new Date().toISOString().slice(0,10); }
+function fmtTime(iso) { return new Date(iso).toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'}); }
+function fmtDate(ds) { return new Date(ds+'T12:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'}); }
+function fmtDateShort(ds) { return new Date(ds+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'long'}); }
+function isToday(iso) { return iso.slice(0,10) === todayKey(); }
+function escH(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-function calcAvg(dk){
-  const d=scores[dk];if(!d)return'–';
-  const v=PARAMS.map(p=>d[p]?.score||0).filter(v=>v>0);
-  if(!v.length)return'–';
-  return(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1);
+function toLocalISO(d) {
+  const pad = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-function updateHeader(){
-  document.getElementById('headerDate').textContent=
+function calcAvg(dk) {
+  const d = scores[dk]; if (!d) return '–';
+  const v = PARAMS.map(p => d[p]?.score||0).filter(v => v > 0);
+  if (!v.length) return '–';
+  return (v.reduce((a,b)=>a+b,0)/v.length).toFixed(1);
+}
+
+// ── HEADER ──
+function updateHeader() {
+  document.getElementById('headerDate').textContent =
     new Date().toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'}).toUpperCase();
-  const has=!!scores[todayKey()];
-  const ss=document.getElementById('scoreStatus');
-  ss.textContent=has?'✓ Scoret · Snit '+calcAvg(todayKey()):'○ Ikke scoret endnu';
-  ss.className='score-status '+(has?'done':'pending');
-  document.getElementById('navDotToday').classList.toggle('show',!has);
+  const has = !!scores[todayKey()];
+  const ss = document.getElementById('scoreStatus');
+  ss.textContent = has ? '✓ Scoret · Snit '+calcAvg(todayKey()) : '○ Ikke scoret endnu';
+  ss.className = 'score-status '+(has?'done':'pending');
+  document.getElementById('navDotToday').classList.toggle('show', !has);
 }
 
-function switchView(name,btn){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+// ── VIEWS ──
+function switchView(name, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   btn.classList.add('active');
-  if(name==='today')renderToday();
-  if(name==='history')renderHistory();
-  if(name==='stats')renderStats();
-  if(name==='settings')renderSettingsView();
-  document.getElementById('main').scrollTop=0;
+  if (name==='today')    renderToday();
+  if (name==='history')  renderHistory();
+  if (name==='stats')    renderStats();
+  if (name==='settings') renderSettingsView();
+  document.getElementById('main').scrollTop = 0;
 }
 
-// TODAY
-function renderToday(){renderScoreCard();renderTodayEntries()}
+// ── TODAY ──
+function renderToday() { renderScoreCard(); renderCigCounter(); renderTodayEntries(); }
 
-function renderScoreCard(){
-  const el=document.getElementById('todayScoreCard');
-  const day=scores[todayKey()];
-  if(!day){
-    el.innerHTML=`<div class="today-score-card" onclick="openScoreModal()">
+function renderScoreCard() {
+  const el = document.getElementById('todayScoreCard');
+  const day = scores[todayKey()];
+  if (!day) {
+    el.innerHTML = `<div class="today-score-card" onclick="openScoreModal(null)">
       <div class="today-score-header">
         <div class="today-score-title">Dagens score</div>
         <div class="today-score-badge pending">Udfyld nu</div>
       </div>
       <div style="padding:0 16px 14px;font-size:12px;color:var(--muted)">Tryk for at score dine 7 parametre</div>
-    </div>`;return;
+    </div>`; return;
   }
-  const chips=PARAMS.map(p=>`<div class="score-mini-chip">${p} <span class="score-mini-val">${day[p]?.score||'–'}</span></div>`).join('');
-  el.innerHTML=`<div class="today-score-card" onclick="openScoreModal()">
+  const chips = PARAMS.map(p => `<div class="score-mini-chip">${p} <span class="score-mini-val">${day[p]?.score||'–'}</span></div>`).join('');
+  el.innerHTML = `<div class="today-score-card" onclick="openScoreModal(null)">
     <div class="today-score-header">
       <div class="today-score-title">Dagens score</div>
       <div class="today-score-badge done">✓ Scoret · Snit ${calcAvg(todayKey())}</div>
@@ -355,13 +428,52 @@ function renderScoreCard(){
   </div>`;
 }
 
-function renderTodayEntries(){
-  const ts=entries.filter(e=>isToday(e.createdAt)).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-  const el=document.getElementById('todayEntries');
-  if(!ts.length){el.innerHTML=`<div class="empty-day">Ingen entries endnu.<br>Skriv hvad der sker i dag.</div>`;return}
-  el.innerHTML=ts.map(e=>`<div class="entry-card">
+// ── CIGARETTE COUNTER ──
+function renderCigCounter() {
+  const el = document.getElementById('cigCounter');
+  const today = todayKey();
+  const todayCigs = cigs[today] || [];
+  const count = todayCigs.length;
+  const lastTime = count > 0 ? fmtTime(todayCigs[todayCigs.length-1]) : null;
+  const timeChips = todayCigs.map(iso =>
+    `<span class="cig-time-chip">${fmtTime(iso)}</span>`
+  ).join('');
+
+  el.innerHTML = `<div class="cig-row">
+    <div class="cig-left">
+      <div class="cig-icon">🚬</div>
+      <div class="cig-info">
+        <div class="cig-label">Cigaretpauser</div>
+        <div class="cig-sub">${lastTime ? 'Sidst: '+lastTime : 'Ingen endnu i dag'}</div>
+        ${count > 0 ? `<div class="cig-times">${timeChips}</div>` : ''}
+      </div>
+    </div>
+    <div class="cig-right">
+      <div class="cig-count">${count}</div>
+      <button class="cig-btn" onclick="addCig()">+</button>
+    </div>
+  </div>`;
+}
+
+function addCig() {
+  const today = todayKey();
+  if (!cigs[today]) cigs[today] = [];
+  cigs[today].push(new Date().toISOString());
+  persist();
+  renderCigCounter();
+}
+
+// ── TODAY ENTRIES ──
+function renderTodayEntries() {
+  const ts = entries.filter(e => isToday(e.createdAt))
+    .sort((a,b) => new Date(b.createdAt)-new Date(a.createdAt));
+  const el = document.getElementById('todayEntries');
+  if (!ts.length) {
+    el.innerHTML = `<div class="empty-day">Ingen entries endnu.<br>Skriv hvad der sker i dag.</div>`; return;
+  }
+  el.innerHTML = ts.map(e => `<div class="entry-card">
     <div class="entry-header">
-      <div class="entry-time">${fmtTime(e.createdAt)}</div>
+      <div class="entry-time" onclick="openEntryModal('${e.id}')" title="Tryk for at redigere">${fmtTime(e.createdAt)}</div>
       <div class="entry-actions">
         <button class="entry-btn" onclick="openEntryModal('${e.id}')">✎</button>
         <button class="entry-btn del" onclick="deleteEntry('${e.id}')">×</button>
@@ -371,21 +483,27 @@ function renderTodayEntries(){
   </div>`).join('');
 }
 
-// SCORE MODAL
-function openScoreModal(){
-  const day=scores[todayKey()]||{};
-  document.getElementById('scoreInputs').innerHTML=PARAMS.map(p=>{
-    const v=day[p]?.score||0;
-    const n=day[p]?.note||'';
-    const safeP=p.replace(/\s/g,'_').replace(/[æøåÆØÅ]/g,c=>({'æ':'ae','ø':'oe','å':'aa','Æ':'AE','Ø':'OE','Å':'AA'}[c]||c));
+// ── SCORE MODAL ──
+function openScoreModal(dateKey) {
+  editingScoreDate = dateKey || todayKey();
+  const day = scores[editingScoreDate] || {};
+  const isHistoric = editingScoreDate !== todayKey();
+  document.getElementById('scoreModalTitle').textContent = isHistoric
+    ? 'Score · ' + fmtDateShort(editingScoreDate)
+    : 'Dagens score';
+
+  document.getElementById('scoreInputs').innerHTML = PARAMS.map(p => {
+    const v = day[p]?.score || 0;
+    const n = day[p]?.note  || '';
+    const safe = p.replace(/\s/g,'_').replace(/[æøåÆØÅ]/g, c=>({'æ':'ae','ø':'oe','å':'aa','Æ':'AE','Ø':'OE','Å':'AA'}[c]||c));
     return `<div class="score-item">
       <div class="score-item-header">
         <div class="score-item-name">${p}</div>
-        <div class="score-item-val ${v===0?'zero':''}" id="sv_${safeP}">${v||'–'}</div>
+        <div class="score-item-val ${v===0?'zero':''}" id="sv_${safe}">${v||'–'}</div>
       </div>
       <div class="slider-wrap">
         <span class="slider-min">0</span>
-        <input type="range" min="0" max="10" value="${v}" data-param="${p}" data-safe="${safeP}" oninput="updateScoreVal(this)">
+        <input type="range" min="0" max="10" value="${v}" data-param="${p}" data-safe="${safe}" oninput="updateScoreVal(this)">
         <span class="slider-max">10</span>
       </div>
       <textarea class="score-note-input" data-note="${p}" placeholder="Note til ${p}...">${escH(n)}</textarea>
@@ -394,99 +512,160 @@ function openScoreModal(){
   document.getElementById('scoreModal').classList.add('open');
 }
 
-function updateScoreVal(s){
-  const el=document.getElementById('sv_'+s.dataset.safe);
-  const v=parseInt(s.value);
-  el.textContent=v===0?'–':v;
-  el.className='score-item-val'+(v===0?' zero':'');
+function updateScoreVal(s) {
+  const el = document.getElementById('sv_'+s.dataset.safe);
+  const v = parseInt(s.value);
+  el.textContent = v===0?'–':v;
+  el.className = 'score-item-val'+(v===0?' zero':'');
 }
 
-function saveScores(){
-  const day={};
-  PARAMS.forEach(p=>{
-    const slider=document.querySelector(`input[data-param="${p}"]`);
-    const note=document.querySelector(`textarea[data-note="${p}"]`);
-    day[p]={score:parseInt(slider.value),note:note.value.trim()};
+function saveScores() {
+  const day = {};
+  PARAMS.forEach(p => {
+    const slider = document.querySelector(`input[data-param="${p}"]`);
+    const note   = document.querySelector(`textarea[data-note="${p}"]`);
+    day[p] = { score: parseInt(slider.value), note: note.value.trim() };
   });
-  scores[todayKey()]=day;persist();closeScoreModal();updateHeader();renderScoreCard();
+  scores[editingScoreDate] = day;
+  persist();
+  closeScoreModal();
+  updateHeader();
+  if (editingScoreDate === todayKey()) renderScoreCard();
+  else renderHistory();
 }
 
-function closeScoreModal(){document.getElementById('scoreModal').classList.remove('open')}
+function closeScoreModal() { document.getElementById('scoreModal').classList.remove('open'); }
 
-// ENTRY MODAL
-function openEntryModal(id=null){
-  editingEntryId=id;
-  const e=id?entries.find(e=>e.id===id):null;
-  document.getElementById('entryModalTitle').textContent=id?'Rediger entry':'Ny entry';
-  document.getElementById('entryTextarea').value=e?.text||'';
+// ── ENTRY MODAL ──
+function openEntryModal(id=null) {
+  editingEntryId = id;
+  const e = id ? entries.find(e => e.id===id) : null;
+  document.getElementById('entryModalTitle').textContent = id ? 'Rediger entry' : 'Ny entry';
+  document.getElementById('entryTextarea').value = e?.text || '';
+  // Set time input
+  const now = e ? new Date(e.createdAt) : new Date();
+  document.getElementById('entryTimeInput').value = toLocalISO(now);
   document.getElementById('entryModal').classList.add('open');
-  setTimeout(()=>document.getElementById('entryTextarea').focus(),300);
+  setTimeout(() => document.getElementById('entryTextarea').focus(), 300);
 }
 
-function saveEntry(){
-  const t=document.getElementById('entryTextarea').value.trim();
-  if(!t){closeEntryModal();return}
-  if(editingEntryId){
-    const i=entries.findIndex(e=>e.id===editingEntryId);
-    if(i>-1)entries[i].text=t;
-  }else{
-    entries.unshift({id:Date.now().toString(),createdAt:new Date().toISOString(),text:t});
+function saveEntry() {
+  const text = document.getElementById('entryTextarea').value.trim();
+  const timeVal = document.getElementById('entryTimeInput').value;
+  if (!text) { closeEntryModal(); return; }
+  const iso = timeVal ? new Date(timeVal).toISOString() : new Date().toISOString();
+
+  if (editingEntryId) {
+    const idx = entries.findIndex(e => e.id===editingEntryId);
+    if (idx > -1) { entries[idx].text = text; entries[idx].createdAt = iso; }
+  } else {
+    entries.unshift({ id: Date.now().toString(), createdAt: iso, text });
   }
-  persist();closeEntryModal();renderTodayEntries();
+  persist();
+  closeEntryModal();
+  renderTodayEntries();
 }
 
-function deleteEntry(id){
-  if(!confirm('Slet denne entry?'))return;
-  entries=entries.filter(e=>e.id!==id);persist();renderTodayEntries();
+function deleteEntry(id) {
+  if (!confirm('Slet denne entry?')) return;
+  entries = entries.filter(e => e.id!==id);
+  persist(); renderTodayEntries();
 }
 
-function closeEntryModal(){document.getElementById('entryModal').classList.remove('open');editingEntryId=null}
+function closeEntryModal() {
+  document.getElementById('entryModal').classList.remove('open');
+  editingEntryId = null;
+}
 
-// HISTORY
-function renderHistory(){
-  const el=document.getElementById('historyList');
-  const allDays=new Set([...Object.keys(scores),...entries.map(e=>e.createdAt.slice(0,10))]);
-  if(!allDays.size){el.innerHTML=`<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Ingen data endnu.</div>`;return}
-  el.innerHTML=[...allDays].sort((a,b)=>b.localeCompare(a)).map(day=>{
-    const ds=scores[day];
-    const de=entries.filter(e=>e.createdAt.slice(0,10)===day).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-    let sh='';
-    if(ds){
-      const rows=PARAMS.map(p=>{
-        const s=ds[p]?.score||0;const n=ds[p]?.note||'';
-        return `<div class="history-score-row"><span class="history-score-name">${p}</span><span class="history-score-val ${s===0?'zero':''}">${s||'–'}</span></div>${n?`<div class="history-score-note" style="grid-column:1/-1">${escH(n)}</div>`:''}`;
+// ── HISTORY ──
+function renderHistory() {
+  const el = document.getElementById('historyList');
+  const allDays = new Set([
+    ...Object.keys(scores),
+    ...entries.map(e => e.createdAt.slice(0,10)),
+    ...Object.keys(cigs)
+  ]);
+  if (!allDays.size) {
+    el.innerHTML = `<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Ingen data endnu.</div>`; return;
+  }
+  el.innerHTML = [...allDays].sort((a,b)=>b.localeCompare(a)).map(day => {
+    const ds = scores[day];
+    const de = entries.filter(e => e.createdAt.slice(0,10)===day).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+    const dc = cigs[day] || [];
+
+    let sh = '';
+    if (ds) {
+      const rows = PARAMS.map(p => {
+        const s = ds[p]?.score||0; const n = ds[p]?.note||'';
+        return `<div class="history-score-row">
+          <span class="history-score-name">${p}</span>
+          <span class="history-score-val ${s===0?'zero':''}">${s||'–'}</span>
+        </div>${n?`<div class="history-score-note" style="grid-column:1/-1">${escH(n)}</div>`:''}`;
       }).join('');
-      sh=`<div class="history-avg">Snit ${calcAvg(day)}</div><div class="history-scores"><div class="history-score-grid">${rows}</div></div>`;
+      sh = `<div style="display:flex;align-items:center;flex-wrap:wrap;gap:0">
+        <div class="history-avg">Snit ${calcAvg(day)}</div>
+        ${dc.length?`<div class="history-cig">🚬 ${dc.length}</div>`:''}
+      </div>
+      <div class="history-scores">
+        <button class="history-edit-btn" onclick="openScoreModal('${day}')">✎</button>
+        <div class="history-score-grid">${rows}</div>
+      </div>`;
+    } else if (dc.length) {
+      sh = `<div class="history-cig" style="margin-bottom:8px">🚬 ${dc.length} cigaretter</div>`;
     }
-    const eh=de.map(e=>`<div class="entry-card"><div class="entry-header"><div class="entry-time">${fmtTime(e.createdAt)}</div></div><div class="entry-text">${escH(e.text)}</div></div>`).join('');
-    return `<div class="day-group"><div class="day-header"><div class="day-name">${fmtDate(day)}</div><div class="day-meta">${de.length} entries</div></div>${sh}${eh}</div>`;
+
+    const eh = de.map(e => `<div class="entry-card">
+      <div class="entry-header">
+        <div class="entry-time">${fmtTime(e.createdAt)}</div>
+      </div>
+      <div class="entry-text">${escH(e.text)}</div>
+    </div>`).join('');
+
+    return `<div class="day-group">
+      <div class="day-header">
+        <div class="day-name">${fmtDate(day)}</div>
+        <div class="day-meta">${de.length} entries</div>
+      </div>
+      ${sh}${eh}
+    </div>`;
   }).join('');
 }
 
-// STATS
-let activeParam=PARAMS[0];
+// ── STATS ──
+let activeParam = PARAMS[0];
 
-function renderStats(){
-  const el=document.getElementById('statsContent');
-  const sdays=Object.keys(scores).sort();
-  if(sdays.length<2){el.innerHTML=`<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Udfyld mindst 2 dages scores<br>for at se statistik.</div>`;return}
-  const streak=calcStreak();
-  const oa=(sdays.reduce((s,d)=>{const a=parseFloat(calcAvg(d));return s+(isNaN(a)?0:a)},0)/sdays.length).toFixed(1);
-  const tabs=PARAMS.map(p=>`<div class="param-tab ${p===activeParam?'active':''}" onclick="setStatParam('${p}')">${p}</div>`).join('');
-  const l14=getLast14();
-  const pv=l14.map(d=>scores[d]?.[activeParam]?.score||null);
-  const svg=buildLineSVG(pv);
-  const lbls=l14.map((d,i)=>i%3===0?new Date(d+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'numeric'}).slice(0,-1):'');
-  const avgs=PARAMS.map(p=>{
-    const v=sdays.map(d=>scores[d]?.[p]?.score||0).filter(v=>v>0);
-    if(!v.length)return null;
-    return{p,avg:(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1)};
+function renderStats() {
+  const el = document.getElementById('statsContent');
+  const sdays = Object.keys(scores).sort();
+  if (sdays.length < 2) {
+    el.innerHTML = `<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Udfyld mindst 2 dages scores<br>for at se statistik.</div>`; return;
+  }
+  const streak = calcStreak();
+  const oa = (sdays.reduce((s,d)=>{const a=parseFloat(calcAvg(d));return s+(isNaN(a)?0:a)},0)/sdays.length).toFixed(1);
+  const totalCigs = Object.values(cigs).reduce((s,v)=>s+v.length,0);
+  const tabs = PARAMS.map(p => `<div class="param-tab ${p===activeParam?'active':''}" onclick="setStatParam('${p}')">${p}</div>`).join('');
+  const l14 = getLast14();
+  const pv = l14.map(d => scores[d]?.[activeParam]?.score || null);
+  const svg = buildLineSVG(pv);
+  const lbls = l14.map((d,i) => i%3===0 ? new Date(d+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'numeric'}).slice(0,-1) : '');
+  const avgs = PARAMS.map(p => {
+    const v = sdays.map(d => scores[d]?.[p]?.score||0).filter(v=>v>0);
+    if (!v.length) return null;
+    return {p, avg:(v.reduce((a,b)=>a+b,0)/v.length).toFixed(1)};
   }).filter(Boolean);
-  el.innerHTML=`
+
+  el.innerHTML = `
     <div class="streak-row">
       <div class="streak-card"><div class="streak-num">${streak}</div><div class="streak-label">Dages streak</div></div>
       <div class="streak-card"><div class="streak-num">${sdays.length}</div><div class="streak-label">Dage scoret</div></div>
       <div class="streak-card"><div class="streak-num">${oa}</div><div class="streak-label">Overall snit</div></div>
+    </div>
+    <div class="stats-card" style="border-color:rgba(255,154,60,.3)">
+      <div class="stats-title">Cigaretter</div>
+      <div style="display:flex;align-items:baseline;gap:8px">
+        <div style="font-family:var(--font-d);font-size:36px;font-weight:800;color:var(--accent5)">${totalCigs}</div>
+        <div style="font-size:12px;color:var(--muted)">total · ${Object.keys(cigs).length} dage registreret</div>
+      </div>
     </div>
     <div class="stats-card">
       <div class="stats-title">Udvikling · seneste 14 dage</div>
@@ -496,25 +675,26 @@ function renderStats(){
     </div>
     <div class="stats-card">
       <div class="stats-title">Gennemsnit · alle tid</div>
-      ${avgs.map(({p,avg})=>`<div class="avg-item"><div class="avg-name">${p}</div><div class="avg-bar-bg"><div class="avg-bar-fill" style="width:${avg*10}%"></div></div><div class="avg-num">${avg}</div></div>`).join('')}
+      ${avgs.map(({p,avg})=>`<div class="avg-item">
+        <div class="avg-name">${p}</div>
+        <div class="avg-bar-bg"><div class="avg-bar-fill" style="width:${avg*10}%"></div></div>
+        <div class="avg-num">${avg}</div>
+      </div>`).join('')}
     </div>`;
 }
 
-function setStatParam(p){activeParam=p;renderStats()}
+function setStatParam(p) { activeParam=p; renderStats(); }
 
-function getLast14(){
+function getLast14() {
   const d=[];for(let i=13;i>=0;i--){const x=new Date();x.setDate(x.getDate()-i);d.push(x.toISOString().slice(0,10))}return d;
 }
 
-function buildLineSVG(vals){
+function buildLineSVG(vals) {
   const w=100,h=90,n=vals.length;
   const valid=vals.filter(v=>v!==null);
-  if(!valid.length)return'<svg viewBox="0 0 100 90"></svg>';
+  if(!valid.length)return'<svg viewBox="0 0 100 90"><text x="50" y="50" text-anchor="middle" fill="#5a5a7a" font-size="8" font-family="monospace">Ingen data endnu</text></svg>';
   const xs=w/(n-1);
-  const pts=vals.map((v,i)=>{
-    if(v===null)return null;
-    return[i*xs,h-((v/10)*(h-8))-4];
-  });
+  const pts=vals.map((v,i)=>v===null?null:[i*xs,h-((v/10)*(h-8))-4]);
   const gl=[2,4,6,8,10].map(v=>{const y=h-((v/10)*(h-8))-4;return`<line x1="0" y1="${y}" x2="${w}" y2="${y}" stroke="#2a2a45" stroke-width="0.4"/>`;}).join('');
   let d='';let first=true;
   pts.forEach((pt,i)=>{
@@ -534,43 +714,43 @@ function buildLineSVG(vals){
   </svg>`;
 }
 
-function calcStreak(){
+function calcStreak() {
   let s=0;const d=new Date();
   while(true){const k=d.toISOString().slice(0,10);if(scores[k]){s++;d.setDate(d.getDate()-1)}else break}
   return s;
 }
 
-// SETTINGS
-function renderSettingsView(){
-  document.getElementById('notifTime').value=notifTime;
+// ── SETTINGS ──
+function renderSettingsView() {
+  document.getElementById('notifTime').value = notifTime;
   updateNotifUI();
-  const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
-  document.getElementById('installBanner').classList.toggle('show',!standalone);
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  document.getElementById('installBanner').classList.toggle('show', !standalone);
 }
 
-function saveNotifTime(){notifTime=document.getElementById('notifTime').value;persist();scheduleNotif()}
+function saveNotifTime() { notifTime=document.getElementById('notifTime').value; persist(); scheduleNotif(); }
 
-function updateNotifUI(){
+function updateNotifUI() {
   const btn=document.getElementById('notifBtn'),txt=document.getElementById('notifStatusText');
-  if(!('Notification'in window)){btn.textContent='Ikke understøttet';btn.disabled=true;txt.textContent='Ikke understøttet i denne browser';return}
+  if(!('Notification'in window)){btn.textContent='Ikke understøttet';btn.disabled=true;txt.textContent='Ikke understøttet';return}
   const p=Notification.permission;
   if(p==='granted'){btn.textContent='✓ Aktiveret';btn.className='notif-btn granted';txt.textContent='Notifikationer er aktiveret'}
-  else if(p==='denied'){btn.textContent='✗ Blokeret';btn.className='notif-btn denied';txt.textContent='Tillad notifikationer i browserindstillinger'}
-  else{btn.textContent='Aktivér';btn.className='notif-btn';txt.textContent='Tryk for at aktivere notifikationer'}
+  else if(p==='denied'){btn.textContent='✗ Blokeret';btn.className='notif-btn denied';txt.textContent='Tillad i browserindstillinger'}
+  else{btn.textContent='Aktivér';btn.className='notif-btn';txt.textContent='Tryk for at aktivere'}
 }
 
-async function requestNotifPermission(){
+async function requestNotifPermission() {
   if(!('Notification'in window))return;
   const r=await Notification.requestPermission();
   updateNotifUI();if(r==='granted')scheduleNotif();
 }
 
-function testNotification(){
+function testNotification() {
   if(Notification.permission!=='granted'){alert('Aktivér notifikationer først.');return}
-  new Notification('LOG · Test',{body:'Notifikationer virker! Du minder om din score kl. '+notifTime+'.'});
+  new Notification('LOG · Test',{body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'});
 }
 
-function scheduleNotif(){
+function scheduleNotif() {
   if(notifInterval)clearInterval(notifInterval);
   if(Notification.permission!=='granted')return;
   notifInterval=setInterval(()=>{
@@ -582,25 +762,29 @@ function scheduleNotif(){
   },30000);
 }
 
-// DATA
-function exportData(){
-  const b=new Blob([JSON.stringify({entries,scores,params:PARAMS,exported:new Date().toISOString()},null,2)],{type:'application/json'});
+// ── DATA ──
+function exportData() {
+  const b=new Blob([JSON.stringify({entries,scores,cigs,params:PARAMS,exported:new Date().toISOString()},null,2)],{type:'application/json'});
   const u=URL.createObjectURL(b);const a=document.createElement('a');
   a.href=u;a.download='log-'+todayKey()+'.json';a.click();URL.revokeObjectURL(u);
 }
 
-function clearAllData(){
+function clearAllData() {
   if(!confirm('Slet AL data permanent?'))return;
-  entries=[];scores={};persist();updateHeader();renderToday();
+  entries=[];scores={};cigs={};persist();updateHeader();renderToday();
 }
 
+// Close on backdrop
 ['scoreModal','entryModal'].forEach(id=>{
   document.getElementById(id).addEventListener('click',function(e){
     if(e.target===this){if(id==='scoreModal')closeScoreModal();else closeEntryModal()}
   });
 });
 
-updateHeader();renderToday();scheduleNotif();
+// ── INIT ──
+updateHeader();
+renderToday();
+scheduleNotif();
 </script>
 </body>
 </html>

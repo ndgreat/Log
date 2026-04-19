@@ -11,9 +11,9 @@
 <title>LOG</title>
 <script>
 try {
-  const m={name:"LOG",short_name:"LOG",start_url:"./",display:"standalone",background_color:"#080810",theme_color:"#080810",orientation:"portrait",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%23080810'/><text x='96' y='140' font-size='110' text-anchor='middle' fill='%237fefbd' font-family='serif' font-weight='900'>L</text></svg>",sizes:"192x192",type:"image/svg+xml"}]};
-  const b=new Blob([JSON.stringify(m)],{type:'application/json'});
-  const l=document.createElement('link');l.rel='manifest';l.href=URL.createObjectURL(b);document.head.appendChild(l);
+  var m={name:"LOG",short_name:"LOG",start_url:"./",display:"standalone",background_color:"#080810",theme_color:"#080810",orientation:"portrait",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' rx='36' fill='%23080810'/><text x='96' y='140' font-size='110' text-anchor='middle' fill='%237fefbd' font-family='serif' font-weight='900'>L</text></svg>",sizes:"192x192",type:"image/svg+xml"}]};
+  var b=new Blob([JSON.stringify(m)],{type:'application/json'});
+  var l=document.createElement('link');l.rel='manifest';l.href=URL.createObjectURL(b);document.head.appendChild(l);
 } catch(e) {}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -163,6 +163,9 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 .install-banner.show{display:block}
 .install-title{font-family:var(--font-d);font-size:13px;font-weight:700;margin-bottom:4px;color:var(--accent3)}
 .install-sub{font-size:11px;color:var(--muted2);line-height:1.6}
+.version-footer{text-align:center;padding:24px 0 8px;font-size:11px;color:var(--muted);letter-spacing:.08em}
+.version-footer span{color:var(--accent);font-weight:500}
+.sw-status{font-size:10px;color:var(--muted);margin-top:4px;text-align:center}
 </style>
 </head>
 <body>
@@ -173,6 +176,7 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
     <div class="score-status" id="scoreStatus"></div>
   </div>
 </header>
+
 <main class="main" id="main">
   <div class="view active" id="view-today">
     <div id="todayScoreCard"></div>
@@ -184,8 +188,10 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
     </button>
     <div id="todayEntries"></div>
   </div>
+
   <div class="view" id="view-history"><div id="historyList"></div></div>
   <div class="view" id="view-stats"><div id="statsContent"></div></div>
+
   <div class="view" id="view-settings">
     <div class="install-banner" id="installBanner">
       <div class="install-title">📲 Installér som app</div>
@@ -217,8 +223,13 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
         <button class="danger-btn" onclick="clearAllData()">Slet</button>
       </div>
     </div>
+    <div class="version-footer">
+      LOG <span>v1.6</span><br>
+      <div class="sw-status" id="swStatus">Service worker: tjekker...</div>
+    </div>
   </div>
 </main>
+
 <nav class="bottom-nav">
   <button class="nav-btn active" onclick="switchView('today',this)">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -279,6 +290,7 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 </div>
 
 <script>
+var VERSION = 'v1.6';
 var PARAMS = ['Baba','Kæreste','Norstat','Trading','Træning','Hus','Mental session'];
 var entries   = JSON.parse(localStorage.getItem('log_entries')  || '[]');
 var scores    = JSON.parse(localStorage.getItem('log_scores')   || '{}');
@@ -287,6 +299,7 @@ var notifTime = localStorage.getItem('log_notif_time') || '21:00';
 var editingEntryId = null;
 var editingScoreDate = null;
 var notifInterval = null;
+var swRegistration = null;
 
 function persist() {
   localStorage.setItem('log_entries', JSON.stringify(entries));
@@ -552,8 +565,21 @@ function requestNotifPermission() {
 
 function testNotification() {
   if(Notification.permission!=='granted'){alert('Aktivér notifikationer først.');return;}
-  try{new Notification('LOG · Test',{body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'});}
-  catch(e){alert('Notifikationer virker ikke i denne browser. Prøv fra PWA-ikonet.');}
+  if(swRegistration) {
+    swRegistration.showNotification('LOG · Test', {
+      body: 'Notifikationer virker! Påmindelse kl. '+notifTime+'.',
+      icon: './icon.png'
+    }).then(function(){
+      // success
+    }).catch(function(e){
+      // fallback to basic
+      try { new Notification('LOG · Test', {body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'}); }
+      catch(e2) { alert('Notifikationer kræver at appen er installeret fra hjemskærmen.'); }
+    });
+  } else {
+    try { new Notification('LOG · Test', {body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'}); }
+    catch(e) { alert('Service worker ikke klar endnu. Prøv at genindlæse appen.'); }
+  }
 }
 
 function scheduleNotif() {
@@ -563,13 +589,17 @@ function scheduleNotif() {
     var n=new Date();
     var hm=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
     if(hm===notifTime&&!scores[todayKey()]){
-      try{new Notification('LOG · Husk din daglige score',{body:'Du har ikke scoret i dag endnu.'});}catch(e){}
+      if(swRegistration){
+        swRegistration.showNotification('LOG · Husk din daglige score',{body:'Du har ikke scoret i dag endnu. Tag 2 minutter til at reflektere.'});
+      } else {
+        try{new Notification('LOG · Husk din daglige score',{body:'Du har ikke scoret i dag endnu.'});}catch(e){}
+      }
     }
   },30000);
 }
 
 function exportData() {
-  var b=new Blob([JSON.stringify({entries:entries,scores:scores,cigs:cigs,params:PARAMS,exported:new Date().toISOString()},null,2)],{type:'application/json'});
+  var b=new Blob([JSON.stringify({entries:entries,scores:scores,cigs:cigs,params:PARAMS,version:VERSION,exported:new Date().toISOString()},null,2)],{type:'application/json'});
   var u=URL.createObjectURL(b);var a=document.createElement('a');
   a.href=u;a.download='log-'+todayKey()+'.json';a.click();URL.revokeObjectURL(u);
 }
@@ -582,7 +612,21 @@ function clearAllData() {
 document.getElementById('scoreModal').addEventListener('click',function(e){if(e.target===this)closeScoreModal();});
 document.getElementById('entryModal').addEventListener('click',function(e){if(e.target===this)closeEntryModal();});
 
-if('serviceWorker'in navigator){navigator.serviceWorker.register('./service-worker.js').catch(function(){});}
+// SERVICE WORKER
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js').then(function(reg) {
+    swRegistration = reg;
+    var swEl = document.getElementById('swStatus');
+    if(swEl) swEl.textContent = 'Service worker: aktiv ✓';
+    scheduleNotif();
+  }).catch(function(err) {
+    var swEl = document.getElementById('swStatus');
+    if(swEl) swEl.textContent = 'Service worker: ikke aktiv';
+  });
+} else {
+  var swEl = document.getElementById('swStatus');
+  if(swEl) swEl.textContent = 'Service worker: ikke understøttet';
+}
 
 updateHeader();
 renderToday();

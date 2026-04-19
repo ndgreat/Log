@@ -31,17 +31,26 @@ try {
 html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:var(--font-m);font-size:14px;display:flex;flex-direction:column}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9000}
-.app-header{flex-shrink:0;background:rgba(8,8,16,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;z-index:50}
+
+/* HEADER */
+.app-header{flex-shrink:0;background:rgba(8,8,16,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;z-index:50;transition:background .6s,border-color .6s}
+.app-header.night{background:rgba(8,8,26,.97);border-color:#3a3a60}
+.app-header.morning{background:rgba(20,12,4,.97);border-color:#4a3a20}
 .logo{font-family:var(--font-d);font-weight:800;font-size:20px;letter-spacing:-.5px;color:var(--accent)}
 .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
 .header-date{font-size:11px;color:var(--muted2);letter-spacing:.08em;text-transform:uppercase}
 .score-status{font-size:10px;letter-spacing:.06em}
 .score-status.done{color:var(--accent)}
 .score-status.pending{color:var(--accent3)}
+.sleep-status{font-size:10px;color:var(--accent4);margin-top:1px}
+
+/* MAIN */
 .main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .view{display:none;padding:18px 18px 20px;animation:fadeUp .22s ease}
 .view.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* NAV */
 .bottom-nav{flex-shrink:0;background:rgba(8,8,16,.97);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:50}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:none;border:none;color:var(--muted);font-family:var(--font-m);font-size:9px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:color .18s;position:relative}
 .nav-btn.active{color:var(--accent)}
@@ -50,7 +59,26 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .nav-dot.show{display:block}
 .sec-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:22px}
 .sec-label:first-child{margin-top:0}
+
+/* DAY TOGGLE */
+.day-toggle{display:flex;gap:6px;margin-bottom:14px}
+.day-toggle-btn{flex:1;padding:9px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);font-family:var(--font-m);font-size:12px;color:var(--muted2);cursor:pointer;transition:all .15s;text-align:center}
+.day-toggle-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+
+/* SLEEP BUTTONS */
+.godnat-btn{width:100%;background:linear-gradient(135deg,#141428,#0a0a18);border:1px solid #4a4a80;border-radius:var(--r);padding:14px 16px;color:#a0a0e0;font-family:var(--font-d);font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;transition:opacity .2s}
+.godnat-btn:active{opacity:.8}
+.godmorgen-btn{width:100%;background:linear-gradient(135deg,#241808,#180e04);border:1px solid #6a4a20;border-radius:var(--r);padding:14px 16px;color:#e0b060;font-family:var(--font-d);font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;transition:opacity .2s}
+.godmorgen-btn:active{opacity:.8}
+.sleep-override-link{display:block;text-align:center;font-size:11px;color:var(--muted);cursor:pointer;padding:4px 0 12px;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
+.sleep-override-link:active{color:var(--muted2)}
+.sleep-info-bar{background:var(--surface);border:1px solid rgba(139,156,244,.25);border-radius:var(--r);padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.sleep-info-text{font-size:11px;color:var(--muted2);line-height:1.7}
+.sleep-info-score{font-family:var(--font-d);font-weight:700;font-size:18px;color:var(--accent4)}
+
+/* SCORE CARD */
 .today-score-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:6px;cursor:pointer}
+.today-score-card:active{border-color:var(--accent)}
 .today-score-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
 .today-score-title{font-family:var(--font-d);font-weight:700;font-size:15px}
 .today-score-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500}
@@ -60,6 +88,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .score-summary-row{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 14px}
 .score-mini-chip{background:var(--surface2);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--muted2);display:flex;align-items:center;gap:5px}
 .score-mini-val{color:var(--accent);font-weight:500}
+
+/* CIG */
 .cig-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:6px}
 .cig-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
 .cig-icon{font-size:18px;flex-shrink:0}
@@ -71,9 +101,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .cig-count{font-family:var(--font-d);font-size:26px;font-weight:800;color:var(--accent5);line-height:1;min-width:32px;text-align:center}
 .cig-btn{background:var(--accent5);border:none;border-radius:50%;width:36px;height:36px;color:var(--bg);font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity .15s,transform .1s;flex-shrink:0}
 .cig-btn:active{opacity:.8;transform:scale(.9)}
+
+/* FAB */
 .fab{width:100%;background:var(--surface);border:1px dashed var(--border);border-radius:var(--r);padding:13px;color:var(--muted2);font-family:var(--font-m);font-size:13px;cursor:pointer;transition:all .15s;text-align:left;display:flex;align-items:center;gap:10px;margin-bottom:4px}
 .fab:active{background:var(--surface2);border-color:var(--accent);color:var(--accent)}
 .fab svg{width:16px;height:16px;stroke-width:1.8;flex-shrink:0}
+
+/* ENTRY CARD */
 .entry-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;animation:fadeUp .18s ease}
 .entry-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
 .entry-time{font-size:11px;color:var(--accent4);letter-spacing:.06em;cursor:pointer;border-bottom:1px dashed var(--border);padding-bottom:1px}
@@ -83,6 +117,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .entry-btn.del:active{color:var(--accent2)}
 .entry-text{color:var(--text);line-height:1.65;font-size:13px;white-space:pre-wrap;word-break:break-word}
 .empty-day{text-align:center;padding:32px 16px;color:var(--muted);font-size:12px;line-height:2;border:1px dashed var(--border);border-radius:var(--r);margin-top:8px}
+
+/* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;backdrop-filter:blur(6px);align-items:flex-end}
 .modal-overlay.open{display:flex}
 .modal{background:var(--surface);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-height:92vh;overflow-y:auto;padding:0 0 40px;animation:slideUp .28s cubic-bezier(.34,1.4,.64,1)}
@@ -92,6 +128,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .modal-title{font-family:var(--font-d);font-weight:700;font-size:17px}
 .modal-close{background:var(--surface2);border:none;color:var(--muted2);width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .modal-body{padding:16px 20px 0}
+
+/* SCORE ITEMS */
 .score-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:10px}
 .score-item-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .score-item-name{font-family:var(--font-d);font-size:13px;font-weight:600}
@@ -105,16 +143,32 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
 .score-note-input{width:100%;background:var(--surface3);border:1px solid transparent;border-radius:8px;padding:8px 10px;color:var(--muted2);font-family:var(--font-m);font-size:12px;line-height:1.5;resize:none;outline:none;min-height:38px;max-height:80px}
 .score-note-input:focus{border-color:var(--border);color:var(--text)}
 .score-note-input::placeholder{color:var(--muted);font-style:italic}
+
+/* SLEEP MODAL */
+.sleep-duration-box{background:var(--surface2);border-radius:var(--r-sm);padding:14px;text-align:center;margin-bottom:14px}
+.sleep-duration-num{font-family:var(--font-d);font-size:32px;font-weight:800;color:var(--accent4);line-height:1}
+.sleep-duration-lbl{font-size:11px;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:.08em}
+.sleep-score-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sleep-score-lbl{font-family:var(--font-d);font-size:13px;font-weight:600;color:var(--accent4)}
+.sleep-score-val{font-family:var(--font-d);font-size:20px;font-weight:800;color:var(--accent4)}
+.sleep-score-val.zero{color:var(--muted)}
+
+/* FORM */
 .form-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;margin-top:14px}
 .form-label:first-child{margin-top:0}
 input[type="datetime-local"]{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;color:var(--text);font-family:var(--font-m);font-size:13px;outline:none;width:100%}
 input[type="datetime-local"]:focus{border-color:var(--accent)}
 .entry-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font-family:var(--font-m);font-size:14px;line-height:1.65;resize:none;min-height:120px;outline:none}
 .entry-textarea:focus{border-color:var(--accent)}
+.sleep-comment{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;color:var(--text);font-family:var(--font-m);font-size:13px;line-height:1.5;resize:none;min-height:70px;outline:none}
+.sleep-comment:focus{border-color:var(--accent4)}
 .btn-row{display:flex;gap:10px;margin-top:20px}
 .btn-cancel{flex:1;background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);padding:13px;color:var(--muted2);font-family:var(--font-m);font-size:13px;cursor:pointer}
 .btn-primary{flex:2;background:var(--accent);border:none;border-radius:var(--r-sm);padding:13px;color:var(--bg);font-family:var(--font-d);font-weight:700;font-size:14px;cursor:pointer;transition:opacity .15s,transform .1s}
 .btn-primary:active{opacity:.85;transform:scale(.98)}
+.btn-morning{background:var(--accent3)!important}
+
+/* HISTORY */
 .day-group{margin-bottom:28px}
 .day-header{display:flex;align-items:baseline;gap:8px;padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:12px}
 .day-name{font-family:var(--font-d);font-weight:700;font-size:15px;text-transform:capitalize}
@@ -130,6 +184,9 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 .history-score-note{margin-top:4px;font-size:11px;color:var(--muted);font-style:italic;padding-left:4px;border-left:2px solid var(--border);line-height:1.5;grid-column:1/-1}
 .history-avg{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent);margin-bottom:8px}
 .history-cig{display:inline-flex;align-items:center;gap:5px;background:rgba(255,154,60,.1);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent5);margin-bottom:8px;margin-left:6px}
+.history-sleep{display:inline-flex;align-items:center;gap:5px;background:rgba(139,156,244,.1);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent4);margin-bottom:8px;margin-left:6px}
+
+/* STATS */
 .stats-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
 .stats-title{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .line-chart{position:relative;height:90px;margin-bottom:8px}
@@ -149,6 +206,8 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 .streak-card{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px;text-align:center}
 .streak-num{font-family:var(--font-d);font-size:28px;font-weight:800;color:var(--accent);line-height:1}
 .streak-label{font-size:10px;color:var(--muted);margin-top:4px;letter-spacing:.06em;text-transform:uppercase}
+
+/* SETTINGS */
 .setting-section{margin-bottom:28px}
 .setting-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border)}
 .setting-row:last-child{border-bottom:none}
@@ -163,25 +222,31 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 .install-banner.show{display:block}
 .install-title{font-family:var(--font-d);font-size:13px;font-weight:700;margin-bottom:4px;color:var(--accent3)}
 .install-sub{font-size:11px;color:var(--muted2);line-height:1.6}
-.version-footer{text-align:center;padding:24px 0 8px;font-size:11px;color:var(--muted);letter-spacing:.08em}
-.version-footer span{color:var(--accent);font-weight:500}
-.sw-status{font-size:10px;color:var(--muted);margin-top:4px;text-align:center}
 </style>
 </head>
 <body>
-<header class="app-header">
+
+<header class="app-header" id="appHeader">
   <div class="logo">LOG</div>
   <div class="header-right">
     <div class="header-date" id="headerDate"></div>
     <div class="score-status" id="scoreStatus"></div>
+    <div class="sleep-status" id="sleepStatus"></div>
   </div>
 </header>
 
 <main class="main" id="main">
+
+  <!-- TODAY -->
   <div class="view active" id="view-today">
+    <div id="sleepArea"></div>
+    <div class="day-toggle">
+      <button class="day-toggle-btn active" id="btnIdag" onclick="setDay(0)">I dag</button>
+      <button class="day-toggle-btn" id="btnIgaar" onclick="setDay(1)">I går</button>
+    </div>
     <div id="todayScoreCard"></div>
     <div id="cigCounter"></div>
-    <div class="sec-label">Entries i dag</div>
+    <div class="sec-label">Entries</div>
     <button class="fab" onclick="openEntryModal()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       Ny entry
@@ -189,9 +254,13 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
     <div id="todayEntries"></div>
   </div>
 
+  <!-- HISTORY -->
   <div class="view" id="view-history"><div id="historyList"></div></div>
+
+  <!-- STATS -->
   <div class="view" id="view-stats"><div id="statsContent"></div></div>
 
+  <!-- SETTINGS -->
   <div class="view" id="view-settings">
     <div class="install-banner" id="installBanner">
       <div class="install-title">📲 Installér som app</div>
@@ -224,10 +293,11 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
       </div>
     </div>
     <div style="margin-top:32px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);text-align:center">
-      <div style="font-family:var(--font-d);font-size:13px;color:var(--muted2)">LOG <span style="color:var(--accent);font-weight:700">v1.6</span></div>
+      <div style="font-family:var(--font-d);font-size:13px;color:var(--muted2)">LOG <span style="color:var(--accent);font-weight:700">v1.7</span></div>
       <div id="swStatus" style="font-size:11px;color:var(--muted);margin-top:6px">Service worker: tjekker...</div>
     </div>
   </div>
+
 </main>
 
 <nav class="bottom-nav">
@@ -289,30 +359,106 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
   </div>
 </div>
 
+<!-- GODNAT OVERRIDE MODAL -->
+<div class="modal-overlay" id="godnatModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-title">🌙 Godnat</div>
+      <button class="modal-close" onclick="closeGodnat()">×</button>
+    </div>
+    <div class="modal-body">
+      <label class="form-label">Sovetidspunkt</label>
+      <input type="datetime-local" id="godnatTimeInput">
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeGodnat()">Annuller</button>
+        <button class="btn-primary" style="background:#4a4a80;color:#d0d0ff" onclick="saveGodnat()">Gem godnat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GODMORGEN MODAL -->
+<div class="modal-overlay" id="godmorgenModal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-head">
+      <div class="modal-title">🌅 Godmorgen</div>
+      <button class="modal-close" onclick="closeGodmorgen()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="sleep-duration-box">
+        <div class="sleep-duration-num" id="sleepDurNum">–</div>
+        <div class="sleep-duration-lbl">Søvnlængde</div>
+      </div>
+      <label class="form-label">Vågnetidspunkt</label>
+      <input type="datetime-local" id="godmorgenWakeInput">
+      <label class="form-label" style="margin-top:14px">Søvnkvalitet</label>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:0">
+        <div class="sleep-score-header">
+          <div class="sleep-score-lbl">Score 0–10</div>
+          <div class="sleep-score-val zero" id="sleepScoreVal">–</div>
+        </div>
+        <div class="slider-wrap">
+          <span class="slider-min">0</span>
+          <input type="range" min="0" max="10" value="0" id="sleepScoreSlider" oninput="updateSleepScore(this)">
+          <span class="slider-max">10</span>
+        </div>
+      </div>
+      <label class="form-label">Kommentar</label>
+      <textarea class="sleep-comment" id="sleepComment" placeholder="Hvordan sov du..."></textarea>
+      <div class="btn-row">
+        <button class="btn-cancel" onclick="closeGodmorgen()">Annuller</button>
+        <button class="btn-primary btn-morning" onclick="saveGodmorgen()">Start dagen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-var VERSION = 'v1.6';
+var VERSION = 'v1.7';
 var PARAMS = ['Baba','Kæreste','Norstat','Trading','Træning','Hus','Mental session'];
+
+// STATE
 var entries   = JSON.parse(localStorage.getItem('log_entries')  || '[]');
 var scores    = JSON.parse(localStorage.getItem('log_scores')   || '{}');
 var cigs      = JSON.parse(localStorage.getItem('log_cigs')     || '{}');
+var sleepLog  = JSON.parse(localStorage.getItem('log_sleep')    || '{}'); // {dateKey: {bedtime, waketime, score, comment, duration, auto}}
+var sleepState= localStorage.getItem('log_sleep_state') || 'awake'; // 'awake' | 'sleeping'
+var bedtime   = localStorage.getItem('log_bedtime') || null;
 var notifTime = localStorage.getItem('log_notif_time') || '21:00';
+var dayOffset = 0; // 0=today, 1=yesterday
 var editingEntryId = null;
 var editingScoreDate = null;
 var notifInterval = null;
-var swRegistration = null;
+var clockInterval = null;
+var swReg = null;
 
 function persist() {
-  localStorage.setItem('log_entries', JSON.stringify(entries));
-  localStorage.setItem('log_scores',  JSON.stringify(scores));
-  localStorage.setItem('log_cigs',    JSON.stringify(cigs));
+  localStorage.setItem('log_entries',  JSON.stringify(entries));
+  localStorage.setItem('log_scores',   JSON.stringify(scores));
+  localStorage.setItem('log_cigs',     JSON.stringify(cigs));
+  localStorage.setItem('log_sleep',    JSON.stringify(sleepLog));
+  localStorage.setItem('log_sleep_state', sleepState);
   localStorage.setItem('log_notif_time', notifTime);
+  if (bedtime) localStorage.setItem('log_bedtime', bedtime);
+  else localStorage.removeItem('log_bedtime');
 }
 
-function todayKey() { return new Date().toISOString().slice(0,10); }
+// DATE UTILS
+function dateKey(offset) {
+  offset = offset || 0;
+  var d = new Date();
+  d.setDate(d.getDate() - offset);
+  return d.toISOString().slice(0,10);
+}
+function todayKey()     { return dateKey(0); }
+function yesterdayKey() { return dateKey(1); }
+function activeKey()    { return dateKey(dayOffset); }
+
 function fmtTime(iso) { return new Date(iso).toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'}); }
 function fmtDate(ds)  { return new Date(ds+'T12:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'}); }
 function fmtDateShort(ds) { return new Date(ds+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'long'}); }
-function isToday(iso) { return iso.slice(0,10) === todayKey(); }
 function escH(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function toLocalISO(d) {
   var p = function(n){return String(n).padStart(2,'0');};
@@ -324,17 +470,77 @@ function calcAvg(dk) {
   if (!v.length) return '–';
   return (v.reduce(function(a,b){return a+b;},0)/v.length).toFixed(1);
 }
-
-function updateHeader() {
-  document.getElementById('headerDate').textContent =
-    new Date().toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'}).toUpperCase();
-  var has = !!scores[todayKey()];
-  var ss = document.getElementById('scoreStatus');
-  ss.textContent = has ? '✓ Scoret · Snit '+calcAvg(todayKey()) : '○ Ikke scoret endnu';
-  ss.className = 'score-status '+(has?'done':'pending');
-  document.getElementById('navDotToday').classList.toggle('show', !has);
+function calcDuration(bed, wake) {
+  var diff = new Date(wake) - new Date(bed);
+  if (diff <= 0) return null;
+  var h = Math.floor(diff/3600000);
+  var m = Math.floor((diff%3600000)/60000);
+  return h+'t '+m+'m';
 }
 
+// TIME WINDOW CHECKS
+function nowHHMM() {
+  var n = new Date();
+  return n.getHours()*60 + n.getMinutes();
+}
+function isGodnatTime() {
+  var m = nowHHMM();
+  return m >= 21*60+30 || m <= 2*60+30;
+}
+function isGodmorgenTime() {
+  var m = nowHHMM();
+  return m >= 5*60 && m <= 8*60;
+}
+
+// AUTO GODNAT — triggers at 02:30 if still awake
+function checkAutoGodnat() {
+  var n = new Date();
+  var h = n.getHours(), min = n.getMinutes();
+  if (h === 2 && min >= 30 && sleepState === 'awake') {
+    // Set auto bedtime to 02:30
+    var autoTime = new Date();
+    autoTime.setHours(2,30,0,0);
+    doGodnat(autoTime.toISOString(), true);
+  }
+  // Auto godmorgen — if still sleeping and it's past 08:00, register wake as first app open
+  if (h >= 8 && sleepState === 'sleeping') {
+    // Don't auto-trigger godmorgen — just show the button so user can register
+    // We only auto-set if they open the app for the first time after 08:00
+  }
+}
+
+// HEADER
+function updateHeader() {
+  var d = new Date();
+  document.getElementById('headerDate').textContent =
+    d.toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'}).toUpperCase();
+
+  var ak = activeKey();
+  var has = !!scores[ak];
+  var lbl = dayOffset === 0 ? 'I dag' : 'I går';
+  var ss = document.getElementById('scoreStatus');
+  ss.textContent = has ? '✓ '+lbl+' · Snit '+calcAvg(ak) : '○ '+lbl+' ikke scoret';
+  ss.className = 'score-status '+(has?'done':'pending');
+  document.getElementById('navDotToday').classList.toggle('show', !scores[todayKey()]);
+
+  // Sleep status in header
+  var sl = document.getElementById('sleepStatus');
+  if (sleepState === 'sleeping' && bedtime) {
+    sl.textContent = '🌙 Sover siden '+fmtTime(bedtime);
+  } else {
+    var ts = sleepLog[todayKey()];
+    if (ts && ts.duration) sl.textContent = '💤 '+ts.duration+' søvn';
+    else sl.textContent = '';
+  }
+
+  // Header color
+  var hdr = document.getElementById('appHeader');
+  if (sleepState === 'sleeping') hdr.className = 'app-header night';
+  else if (isGodmorgenTime()) hdr.className = 'app-header morning';
+  else hdr.className = 'app-header';
+}
+
+// VIEWS
 function switchView(name, btn) {
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
   document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
@@ -347,22 +553,160 @@ function switchView(name, btn) {
   document.getElementById('main').scrollTop = 0;
 }
 
-function renderToday() { renderScoreCard(); renderCigCounter(); renderTodayEntries(); }
+// DAY TOGGLE
+function setDay(offset) {
+  dayOffset = offset;
+  document.getElementById('btnIdag').classList.toggle('active', offset===0);
+  document.getElementById('btnIgaar').classList.toggle('active', offset===1);
+  updateHeader();
+  renderScoreCard();
+  renderCigCounter();
+  renderTodayEntries();
+}
 
+// TODAY
+function renderToday() {
+  renderSleepArea();
+  renderScoreCard();
+  renderCigCounter();
+  renderTodayEntries();
+}
+
+// SLEEP AREA
+function renderSleepArea() {
+  var el = document.getElementById('sleepArea');
+  var html = '';
+
+  if (sleepState === 'sleeping') {
+    // Show godmorgen button if in window, always show override
+    if (isGodmorgenTime()) {
+      html += '<button class="godmorgen-btn" onclick="openGodmorgen()"><span>🌅 Godmorgen</span><span style="font-size:12px;font-weight:400;opacity:.7">Registrér opvågning</span></button>';
+    }
+    html += '<span class="sleep-override-link" onclick="openGodmorgen()">🌅 Sæt vågnetidspunkt manuelt</span>';
+  } else {
+    // Show godnat button if in window, always show override
+    if (isGodnatTime()) {
+      html += '<button class="godnat-btn" onclick="openGodnat(false)"><span>🌙 Godnat</span><span style="font-size:12px;font-weight:400;opacity:.7">Lås dagens score</span></button>';
+    }
+    html += '<span class="sleep-override-link" onclick="openGodnat(true)">🌙 Sæt sovetidspunkt manuelt</span>';
+  }
+
+  // Show today sleep info if available
+  var ts = sleepLog[todayKey()];
+  if (ts && (ts.bedtime || ts.waketime)) {
+    var parts = [];
+    if (ts.bedtime)  parts.push('Sov: '+fmtTime(ts.bedtime));
+    if (ts.waketime) parts.push('Vågnet: '+fmtTime(ts.waketime));
+    if (ts.duration) parts.push('Varighed: '+ts.duration);
+    html += '<div class="sleep-info-bar"><div class="sleep-info-text">'+parts.join(' &nbsp;·&nbsp; ')+(ts.comment?'<br><em style="color:var(--muted)">'+escH(ts.comment)+'</em>':'')+'</div>'+(ts.score?'<div class="sleep-info-score">'+ts.score+'<span style="font-size:11px;font-weight:400;color:var(--muted)">/10</span></div>':'')+'</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+// GODNAT
+function openGodnat(manual) {
+  var now = new Date();
+  document.getElementById('godnatTimeInput').value = toLocalISO(now);
+  document.getElementById('godnatModal').classList.add('open');
+}
+
+function saveGodnat() {
+  var val = document.getElementById('godnatTimeInput').value;
+  var iso = val ? new Date(val).toISOString() : new Date().toISOString();
+  doGodnat(iso, false);
+  closeGodnat();
+}
+
+function doGodnat(iso, isAuto) {
+  sleepState = 'sleeping';
+  bedtime = iso;
+  var dk = todayKey();
+  if (!sleepLog[dk]) sleepLog[dk] = {};
+  sleepLog[dk].bedtime = iso;
+  sleepLog[dk].auto = isAuto || false;
+  persist();
+  updateHeader();
+  renderSleepArea();
+}
+
+function closeGodnat() {
+  document.getElementById('godnatModal').classList.remove('open');
+}
+
+// GODMORGEN
+function openGodmorgen() {
+  var now = new Date();
+  document.getElementById('godmorgenWakeInput').value = toLocalISO(now);
+  document.getElementById('sleepScoreSlider').value = 0;
+  document.getElementById('sleepScoreVal').textContent = '–';
+  document.getElementById('sleepScoreVal').className = 'sleep-score-val zero';
+  document.getElementById('sleepComment').value = '';
+  // Calc duration with current time
+  updateGodmorgenDuration();
+  document.getElementById('godmorgenModal').classList.add('open');
+}
+
+function updateGodmorgenDuration() {
+  var wakeVal = document.getElementById('godmorgenWakeInput').value;
+  var wakeISO = wakeVal ? new Date(wakeVal).toISOString() : new Date().toISOString();
+  var dur = bedtime ? calcDuration(bedtime, wakeISO) : null;
+  document.getElementById('sleepDurNum').textContent = dur || '–';
+}
+
+function updateSleepScore(s) {
+  var v = parseInt(s.value);
+  var el = document.getElementById('sleepScoreVal');
+  el.textContent = v===0?'–':v;
+  el.className = 'sleep-score-val'+(v===0?' zero':'');
+}
+
+function saveGodmorgen() {
+  var wakeVal = document.getElementById('godmorgenWakeInput').value;
+  var wakeISO = wakeVal ? new Date(wakeVal).toISOString() : new Date().toISOString();
+  var score   = parseInt(document.getElementById('sleepScoreSlider').value);
+  var comment = document.getElementById('sleepComment').value.trim();
+  var dur     = bedtime ? calcDuration(bedtime, wakeISO) : null;
+  var dk      = todayKey();
+
+  if (!sleepLog[dk]) sleepLog[dk] = {};
+  sleepLog[dk].waketime = wakeISO;
+  sleepLog[dk].score    = score;
+  sleepLog[dk].comment  = comment;
+  sleepLog[dk].duration = dur;
+  if (bedtime) sleepLog[dk].bedtime = bedtime;
+
+  sleepState = 'awake';
+  bedtime = null;
+  persist();
+  closeGodmorgen();
+  updateHeader();
+  renderSleepArea();
+}
+
+function closeGodmorgen() {
+  document.getElementById('godmorgenModal').classList.remove('open');
+}
+
+// SCORE CARD
 function renderScoreCard() {
   var el = document.getElementById('todayScoreCard');
-  var day = scores[todayKey()];
+  var dk = activeKey();
+  var day = scores[dk];
+  var lbl = dayOffset===0 ? 'Dagens score' : 'Gårsdagens score';
   if (!day) {
-    el.innerHTML = '<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">Dagens score</div><div class="today-score-badge pending">Udfyld nu</div></div><div style="padding:0 16px 14px;font-size:12px;color:var(--muted)">Tryk for at score dine 7 parametre</div></div>';
+    el.innerHTML = '<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">'+lbl+'</div><div class="today-score-badge pending">Udfyld nu</div></div><div style="padding:0 16px 14px;font-size:12px;color:var(--muted)">Tryk for at score dine 7 parametre</div></div>';
     return;
   }
   var chips = PARAMS.map(function(p){return '<div class="score-mini-chip">'+p+' <span class="score-mini-val">'+(day[p]&&day[p].score||'–')+'</span></div>';}).join('');
-  el.innerHTML = '<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">Dagens score</div><div class="today-score-badge done">✓ Snit '+calcAvg(todayKey())+'</div></div><div class="score-summary-row">'+chips+'</div></div>';
+  el.innerHTML = '<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">'+lbl+'</div><div class="today-score-badge done">✓ Snit '+calcAvg(dk)+'</div></div><div class="score-summary-row">'+chips+'</div></div>';
 }
 
+// CIG COUNTER
 function renderCigCounter() {
   var el = document.getElementById('cigCounter');
-  var todayCigs = cigs[todayKey()] || [];
+  var dk = activeKey();
+  var todayCigs = cigs[dk] || [];
   var count = todayCigs.length;
   var lastTime = count > 0 ? fmtTime(todayCigs[todayCigs.length-1]) : null;
   var chips = todayCigs.map(function(iso){return '<span class="cig-time-chip">'+fmtTime(iso)+'</span>';}).join('');
@@ -370,26 +714,29 @@ function renderCigCounter() {
 }
 
 function addCig() {
-  var dk = todayKey();
+  var dk = activeKey();
   if (!cigs[dk]) cigs[dk] = [];
   cigs[dk].push(new Date().toISOString());
   persist(); renderCigCounter();
 }
 
+// ENTRIES
 function renderTodayEntries() {
-  var ts = entries.filter(function(e){return isToday(e.createdAt);}).sort(function(a,b){return new Date(b.createdAt)-new Date(a.createdAt);});
+  var dk = activeKey();
+  var ts = entries.filter(function(e){return e.createdAt.slice(0,10)===dk;}).sort(function(a,b){return new Date(b.createdAt)-new Date(a.createdAt);});
   var el = document.getElementById('todayEntries');
-  if (!ts.length) { el.innerHTML = '<div class="empty-day">Ingen entries endnu.<br>Skriv hvad der sker i dag.</div>'; return; }
+  if (!ts.length) { el.innerHTML = '<div class="empty-day">Ingen entries endnu.<br>Skriv hvad der sker.</div>'; return; }
   el.innerHTML = ts.map(function(e){
     return '<div class="entry-card"><div class="entry-header"><div class="entry-time" onclick="openEntryModal(\''+e.id+'\')">'+fmtTime(e.createdAt)+'</div><div class="entry-actions"><button class="entry-btn" onclick="openEntryModal(\''+e.id+'\')">✎</button><button class="entry-btn del" onclick="deleteEntry(\''+e.id+'\')">×</button></div></div><div class="entry-text">'+escH(e.text)+'</div></div>';
   }).join('');
 }
 
+// SCORE MODAL
 function openScoreModal(dateKey) {
-  editingScoreDate = dateKey || todayKey();
+  editingScoreDate = dateKey || activeKey();
   var day = scores[editingScoreDate] || {};
   var isHistoric = editingScoreDate !== todayKey();
-  document.getElementById('scoreModalTitle').textContent = isHistoric ? 'Score · '+fmtDateShort(editingScoreDate) : 'Dagens score';
+  document.getElementById('scoreModalTitle').textContent = isHistoric ? 'Score · '+fmtDateShort(editingScoreDate) : (dayOffset===1?'Gårsdagens score':'Dagens score');
   document.getElementById('scoreInputs').innerHTML = PARAMS.map(function(p){
     var v = (day[p]&&day[p].score)||0;
     var n = (day[p]&&day[p].note)||'';
@@ -415,11 +762,12 @@ function saveScores() {
   });
   scores[editingScoreDate] = day;
   persist(); closeScoreModal(); updateHeader();
-  if (editingScoreDate===todayKey()) renderScoreCard(); else renderHistory();
+  if (editingScoreDate===activeKey()) renderScoreCard(); else renderHistory();
 }
 
 function closeScoreModal() { document.getElementById('scoreModal').classList.remove('open'); }
 
+// ENTRY MODAL
 function openEntryModal(id) {
   id = id || null;
   editingEntryId = id;
@@ -456,33 +804,44 @@ function closeEntryModal() {
   editingEntryId = null;
 }
 
+// HISTORY
 function renderHistory() {
   var el = document.getElementById('historyList');
   var allDays = {};
   Object.keys(scores).forEach(function(d){allDays[d]=1;});
   entries.forEach(function(e){allDays[e.createdAt.slice(0,10)]=1;});
   Object.keys(cigs).forEach(function(d){allDays[d]=1;});
+  Object.keys(sleepLog).forEach(function(d){allDays[d]=1;});
   var days = Object.keys(allDays).sort(function(a,b){return b.localeCompare(a);});
   if (!days.length) { el.innerHTML='<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Ingen data endnu.</div>'; return; }
   el.innerHTML = days.map(function(day){
     var ds = scores[day];
     var de = entries.filter(function(e){return e.createdAt.slice(0,10)===day;}).sort(function(a,b){return new Date(b.createdAt)-new Date(a.createdAt);});
     var dc = cigs[day]||[];
+    var sl = sleepLog[day];
+    var badges = '';
+    if (ds) badges += '<div class="history-avg">Snit '+calcAvg(day)+'</div>';
+    if (dc.length) badges += '<div class="history-cig">🚬 '+dc.length+'</div>';
+    if (sl&&sl.duration) badges += '<div class="history-sleep">💤 '+sl.duration+(sl.score?' · '+sl.score+'/10':'')+'</div>';
     var sh = '';
     if (ds) {
       var rows = PARAMS.map(function(p){
         var s=(ds[p]&&ds[p].score)||0; var n=(ds[p]&&ds[p].note)||'';
         return '<div class="history-score-row"><span class="history-score-name">'+p+'</span><span class="history-score-val '+(s===0?'zero':'')+'">'+( s||'–')+'</span></div>'+(n?'<div class="history-score-note" style="grid-column:1/-1">'+escH(n)+'</div>':'');
       }).join('');
-      sh = '<div style="display:flex;align-items:center;flex-wrap:wrap"><div class="history-avg">Snit '+calcAvg(day)+'</div>'+(dc.length?'<div class="history-cig">🚬 '+dc.length+'</div>':'')+'</div><div class="history-scores"><button class="history-edit-btn" onclick="openScoreModal(\''+day+'\')">✎</button><div class="history-score-grid">'+rows+'</div></div>';
-    } else if (dc.length) {
-      sh = '<div class="history-cig" style="margin-bottom:8px">🚬 '+dc.length+' cigaretter</div>';
+      sh = (badges?'<div style="display:flex;flex-wrap:wrap;margin-bottom:8px">'+badges+'</div>':'')+'<div class="history-scores"><button class="history-edit-btn" onclick="openScoreModal(\''+day+'\')">✎</button><div class="history-score-grid">'+rows+'</div></div>';
+    } else {
+      sh = badges ? '<div style="display:flex;flex-wrap:wrap;margin-bottom:8px">'+badges+'</div>' : '';
+    }
+    if (sl&&sl.comment) {
+      sh += '<div class="entry-card" style="border-color:rgba(139,156,244,.25)"><div class="entry-header"><div class="entry-time" style="color:var(--accent4)">💤 Søvn</div></div><div class="entry-text">'+escH(sl.comment)+'</div></div>';
     }
     var eh = de.map(function(e){return '<div class="entry-card"><div class="entry-header"><div class="entry-time">'+fmtTime(e.createdAt)+'</div></div><div class="entry-text">'+escH(e.text)+'</div></div>';}).join('');
     return '<div class="day-group"><div class="day-header"><div class="day-name">'+fmtDate(day)+'</div><div class="day-meta">'+de.length+' entries</div></div>'+sh+eh+'</div>';
   }).join('');
 }
 
+// STATS
 var activeParam = PARAMS[0];
 
 function renderStats() {
@@ -492,6 +851,8 @@ function renderStats() {
   var streak = calcStreak();
   var oa = (sdays.reduce(function(s,d){var a=parseFloat(calcAvg(d));return s+(isNaN(a)?0:a);},0)/sdays.length).toFixed(1);
   var totalCigs = Object.values(cigs).reduce(function(s,v){return s+v.length;},0);
+  var sleepScores = Object.values(sleepLog).filter(function(s){return s.score>0;});
+  var avgSleep = sleepScores.length ? (sleepScores.reduce(function(s,v){return s+(v.score||0);},0)/sleepScores.length).toFixed(1) : '–';
   var tabs = PARAMS.map(function(p){return '<div class="param-tab '+(p===activeParam?'active':'')+'" onclick="setStatParam(\''+p+'\')">'+p+'</div>';}).join('');
   var l14 = getLast14();
   var pv = l14.map(function(d){return scores[d]&&scores[d][activeParam]?scores[d][activeParam].score:null;});
@@ -504,7 +865,7 @@ function renderStats() {
   }).filter(function(x){return x;});
   el.innerHTML =
     '<div class="streak-row"><div class="streak-card"><div class="streak-num">'+streak+'</div><div class="streak-label">Dages streak</div></div><div class="streak-card"><div class="streak-num">'+sdays.length+'</div><div class="streak-label">Dage scoret</div></div><div class="streak-card"><div class="streak-num">'+oa+'</div><div class="streak-label">Overall snit</div></div></div>'+
-    '<div class="stats-card" style="border-color:rgba(255,154,60,.3)"><div class="stats-title">Cigaretter total</div><div style="font-family:var(--font-d);font-size:36px;font-weight:800;color:var(--accent5)">'+totalCigs+'</div></div>'+
+    '<div class="streak-row"><div class="streak-card" style="border-color:rgba(255,154,60,.3)"><div class="streak-num" style="color:var(--accent5)">'+totalCigs+'</div><div class="streak-label">Cigaretter total</div></div><div class="streak-card" style="border-color:rgba(139,156,244,.3)"><div class="streak-num" style="color:var(--accent4)">'+avgSleep+'</div><div class="streak-label">Søvnscore snit</div></div></div>'+
     '<div class="stats-card"><div class="stats-title">Udvikling · seneste 14 dage</div><div class="param-tabs">'+tabs+'</div><div class="line-chart">'+svg+'</div><div class="chart-labels">'+lbls.map(function(l){return '<span class="chart-label">'+l+'</span>';}).join('')+'</div></div>'+
     '<div class="stats-card"><div class="stats-title">Gennemsnit · alle tid</div>'+avgs.map(function(x){return '<div class="avg-item"><div class="avg-name">'+x.p+'</div><div class="avg-bar-bg"><div class="avg-bar-fill" style="width:'+x.avg*10+'%"></div></div><div class="avg-num">'+x.avg+'</div></div>';}).join('')+'</div>';
 }
@@ -540,6 +901,7 @@ function calcStreak() {
   return s;
 }
 
+// SETTINGS
 function renderSettingsView() {
   document.getElementById('notifTime').value = notifTime;
   updateNotifUI();
@@ -565,21 +927,10 @@ function requestNotifPermission() {
 
 function testNotification() {
   if(Notification.permission!=='granted'){alert('Aktivér notifikationer først.');return;}
-  if(swRegistration) {
-    swRegistration.showNotification('LOG · Test', {
-      body: 'Notifikationer virker! Påmindelse kl. '+notifTime+'.',
-      icon: './icon.png'
-    }).then(function(){
-      // success
-    }).catch(function(e){
-      // fallback to basic
-      try { new Notification('LOG · Test', {body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'}); }
-      catch(e2) { alert('Notifikationer kræver at appen er installeret fra hjemskærmen.'); }
-    });
-  } else {
-    try { new Notification('LOG · Test', {body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'}); }
-    catch(e) { alert('Service worker ikke klar endnu. Prøv at genindlæse appen.'); }
-  }
+  var title = 'LOG · Test';
+  var opts  = {body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'};
+  if(swReg){swReg.showNotification(title,opts);}
+  else{try{new Notification(title,opts);}catch(e){alert('Prøv at genindlæse appen fra hjemskærmsikonet.');}}
 }
 
 function scheduleNotif() {
@@ -589,48 +940,67 @@ function scheduleNotif() {
     var n=new Date();
     var hm=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
     if(hm===notifTime&&!scores[todayKey()]){
-      if(swRegistration){
-        swRegistration.showNotification('LOG · Husk din daglige score',{body:'Du har ikke scoret i dag endnu. Tag 2 minutter til at reflektere.'});
-      } else {
-        try{new Notification('LOG · Husk din daglige score',{body:'Du har ikke scoret i dag endnu.'});}catch(e){}
-      }
+      var title='LOG · Husk din daglige score';
+      var opts={body:'Du har ikke scoret i dag endnu.'};
+      if(swReg)swReg.showNotification(title,opts);
+      else try{new Notification(title,opts);}catch(e){}
     }
   },30000);
 }
 
 function exportData() {
-  var b=new Blob([JSON.stringify({entries:entries,scores:scores,cigs:cigs,params:PARAMS,version:VERSION,exported:new Date().toISOString()},null,2)],{type:'application/json'});
+  var b=new Blob([JSON.stringify({entries:entries,scores:scores,cigs:cigs,sleepLog:sleepLog,params:PARAMS,version:VERSION,exported:new Date().toISOString()},null,2)],{type:'application/json'});
   var u=URL.createObjectURL(b);var a=document.createElement('a');
   a.href=u;a.download='log-'+todayKey()+'.json';a.click();URL.revokeObjectURL(u);
 }
 
 function clearAllData() {
   if(!confirm('Slet AL data permanent?'))return;
-  entries=[];scores={};cigs={};persist();updateHeader();renderToday();
+  entries=[];scores={};cigs={};sleepLog={};sleepState='awake';bedtime=null;
+  persist();updateHeader();renderToday();
 }
 
-document.getElementById('scoreModal').addEventListener('click',function(e){if(e.target===this)closeScoreModal();});
-document.getElementById('entryModal').addEventListener('click',function(e){if(e.target===this)closeEntryModal();});
+// MODAL BACKDROPS
+['scoreModal','entryModal','godnatModal','godmorgenModal'].forEach(function(id){
+  document.getElementById(id).addEventListener('click',function(e){
+    if(e.target!==this)return;
+    if(id==='scoreModal')closeScoreModal();
+    else if(id==='entryModal')closeEntryModal();
+    else if(id==='godnatModal')closeGodnat();
+    else if(id==='godmorgenModal')closeGodmorgen();
+  });
+});
+
+// Update duration when wake time changes
+document.getElementById('godmorgenWakeInput').addEventListener('change', function(){
+  updateGodmorgenDuration();
+});
 
 // SERVICE WORKER
 if('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./service-worker.js').then(function(reg) {
-    swRegistration = reg;
-    var swEl = document.getElementById('swStatus');
-    if(swEl) swEl.textContent = 'Service worker: aktiv ✓';
+  navigator.serviceWorker.register('./service-worker.js').then(function(reg){
+    swReg = reg;
+    var el = document.getElementById('swStatus');
+    if(el) el.textContent = 'Service worker: aktiv ✓';
     scheduleNotif();
-  }).catch(function(err) {
-    var swEl = document.getElementById('swStatus');
-    if(swEl) swEl.textContent = 'Service worker: ikke aktiv';
+  }).catch(function(){
+    var el = document.getElementById('swStatus');
+    if(el) el.textContent = 'Service worker: ikke aktiv';
   });
-} else {
-  var swEl = document.getElementById('swStatus');
-  if(swEl) swEl.textContent = 'Service worker: ikke understøttet';
 }
 
+// CLOCK — check every minute for auto-godnat and update sleep buttons
+clockInterval = setInterval(function(){
+  checkAutoGodnat();
+  renderSleepArea();
+  updateHeader();
+}, 60000);
+
+// INIT
 updateHeader();
 renderToday();
 scheduleNotif();
+checkAutoGodnat();
 </script>
 </body>
 </html>

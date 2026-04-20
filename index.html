@@ -32,7 +32,6 @@ html,body{height:100%;overflow:hidden}
 body{background:var(--bg);color:var(--text);font-family:var(--font-m);font-size:14px;display:flex;flex-direction:column}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9000}
 
-/* HEADER */
 .app-header{flex-shrink:0;background:rgba(8,8,16,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;z-index:50;transition:background .6s,border-color .6s}
 .app-header.night{background:rgba(8,8,26,.97);border-color:#3a3a60}
 .app-header.morning{background:rgba(20,12,4,.97);border-color:#4a3a20}
@@ -44,13 +43,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .score-status.pending{color:var(--accent3)}
 .sleep-status{font-size:10px;color:var(--accent4);margin-top:1px}
 
-/* MAIN */
 .main{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .view{display:none;padding:18px 18px 20px;animation:fadeUp .22s ease}
 .view.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* NAV */
 .bottom-nav{flex-shrink:0;background:rgba(8,8,16,.97);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom,0px);z-index:50}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:none;border:none;color:var(--muted);font-family:var(--font-m);font-size:9px;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:color .18s;position:relative}
 .nav-btn.active{color:var(--accent)}
@@ -65,13 +62,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .day-toggle-btn{flex:1;padding:9px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);font-family:var(--font-m);font-size:12px;color:var(--muted2);cursor:pointer;transition:all .15s;text-align:center}
 .day-toggle-btn.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
 
-/* SLEEP BUTTONS */
+/* SLEEP */
 .godnat-btn{width:100%;background:linear-gradient(135deg,#141428,#0a0a18);border:1px solid #4a4a80;border-radius:var(--r);padding:14px 16px;color:#a0a0e0;font-family:var(--font-d);font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;transition:opacity .2s}
 .godnat-btn:active{opacity:.8}
 .godmorgen-btn{width:100%;background:linear-gradient(135deg,#241808,#180e04);border:1px solid #6a4a20;border-radius:var(--r);padding:14px 16px;color:#e0b060;font-family:var(--font-d);font-weight:700;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;transition:opacity .2s}
 .godmorgen-btn:active{opacity:.8}
-.sleep-override-link{display:block;text-align:center;font-size:11px;color:var(--muted);cursor:pointer;padding:4px 0 12px;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
-.sleep-override-link:active{color:var(--muted2)}
+.sleep-override-link{display:block;text-align:center;font-size:11px;color:var(--muted);cursor:pointer;padding:4px 0 10px;text-decoration:underline;text-decoration-color:var(--border);text-underline-offset:3px}
 .sleep-info-bar{background:var(--surface);border:1px solid rgba(139,156,244,.25);border-radius:var(--r);padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
 .sleep-info-text{font-size:11px;color:var(--muted2);line-height:1.7}
 .sleep-info-score{font-family:var(--font-d);font-weight:700;font-size:18px;color:var(--accent4)}
@@ -102,21 +98,35 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .cig-btn{background:var(--accent5);border:none;border-radius:50%;width:36px;height:36px;color:var(--bg);font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity .15s,transform .1s;flex-shrink:0}
 .cig-btn:active{opacity:.8;transform:scale(.9)}
 
-/* FAB */
-.fab{width:100%;background:var(--surface);border:1px dashed var(--border);border-radius:var(--r);padding:13px;color:var(--muted2);font-family:var(--font-m);font-size:13px;cursor:pointer;transition:all .15s;text-align:left;display:flex;align-items:center;gap:10px;margin-bottom:4px}
-.fab:active{background:var(--surface2);border-color:var(--accent);color:var(--accent)}
-.fab svg{width:16px;height:16px;stroke-width:1.8;flex-shrink:0}
-
-/* ENTRY CARD */
-.entry-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:8px;animation:fadeUp .18s ease}
-.entry-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.entry-time{font-size:11px;color:var(--accent4);letter-spacing:.06em;cursor:pointer;border-bottom:1px dashed var(--border);padding-bottom:1px}
-.entry-actions{display:flex;gap:8px}
-.entry-btn{background:none;border:none;color:var(--muted);font-size:13px;cursor:pointer;padding:2px 4px;border-radius:4px;line-height:1}
-.entry-btn:active{color:var(--accent)}
-.entry-btn.del:active{color:var(--accent2)}
-.entry-text{color:var(--text);line-height:1.65;font-size:13px;white-space:pre-wrap;word-break:break-word}
-.empty-day{text-align:center;padding:32px 16px;color:var(--muted);font-size:12px;line-height:2;border:1px dashed var(--border);border-radius:var(--r);margin-top:8px}
+/* SLOTS */
+.slots-wrap{margin-top:4px}
+.slot-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;transition:border-color .2s}
+.slot-card.active-slot{border-color:rgba(127,239,189,.35)}
+.slot-card.has-entries{border-color:var(--border)}
+.slot-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer}
+.slot-header:active{background:var(--surface2)}
+.slot-left{display:flex;align-items:center;gap:10px}
+.slot-time{font-size:11px;color:var(--muted2);letter-spacing:.06em;font-family:var(--font-m);flex-shrink:0;width:68px}
+.slot-time.current{color:var(--accent)}
+.slot-prompt{font-size:12px;color:var(--muted);font-style:italic;flex:1}
+.slot-prompt.current{color:var(--text);font-style:normal}
+.slot-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.slot-count{font-size:10px;color:var(--accent);background:var(--accent-dim);border-radius:12px;padding:2px 8px;font-weight:500}
+.slot-add{background:var(--surface2);border:none;border-radius:50%;width:26px;height:26px;color:var(--muted2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;line-height:1}
+.slot-add:active{background:var(--accent);color:var(--bg)}
+.slot-add.current-add{background:var(--accent-dim);color:var(--accent);border:1px solid rgba(127,239,189,.3)}
+.slot-entries{padding:0 14px 12px;border-top:1px solid var(--border);display:none}
+.slot-entries.open{display:block}
+.slot-entry{padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.slot-entry:last-child{border-bottom:none;padding-bottom:0}
+.slot-entry-body{flex:1;min-width:0}
+.slot-entry-time{font-size:10px;color:var(--accent4);margin-bottom:3px}
+.slot-entry-text{font-size:12px;color:var(--text);line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.slot-entry-actions{display:flex;gap:6px;flex-shrink:0}
+.slot-entry-btn{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;padding:2px;line-height:1}
+.slot-entry-btn:active{color:var(--accent)}
+.slot-entry-btn.del:active{color:var(--accent2)}
+.slot-empty{font-size:11px;color:var(--muted);padding:10px 0;font-style:italic}
 
 /* MODALS */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;backdrop-filter:blur(6px);align-items:flex-end}
@@ -128,6 +138,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .modal-title{font-family:var(--font-d);font-weight:700;font-size:17px}
 .modal-close{background:var(--surface2);border:none;color:var(--muted2);width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .modal-body{padding:16px 20px 0}
+.modal-prompt{font-size:13px;color:var(--accent4);font-style:italic;margin-bottom:14px;padding:10px 12px;background:rgba(139,156,244,.08);border-radius:var(--r-sm);border-left:2px solid var(--accent4)}
 
 /* SCORE ITEMS */
 .score-item{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:10px}
@@ -158,7 +169,7 @@ input[type="range"]:active::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(127,2
 .form-label:first-child{margin-top:0}
 input[type="datetime-local"]{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;color:var(--text);font-family:var(--font-m);font-size:13px;outline:none;width:100%}
 input[type="datetime-local"]:focus{border-color:var(--accent)}
-.entry-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font-family:var(--font-m);font-size:14px;line-height:1.65;resize:none;min-height:120px;outline:none}
+.entry-textarea{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font-family:var(--font-m);font-size:14px;line-height:1.65;resize:none;min-height:110px;outline:none}
 .entry-textarea:focus{border-color:var(--accent)}
 .sleep-comment{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;color:var(--text);font-family:var(--font-m);font-size:13px;line-height:1.5;resize:none;min-height:70px;outline:none}
 .sleep-comment:focus{border-color:var(--accent4)}
@@ -185,6 +196,11 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 .history-avg{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent);margin-bottom:8px}
 .history-cig{display:inline-flex;align-items:center;gap:5px;background:rgba(255,154,60,.1);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent5);margin-bottom:8px;margin-left:6px}
 .history-sleep{display:inline-flex;align-items:center;gap:5px;background:rgba(139,156,244,.1);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--accent4);margin-bottom:8px;margin-left:6px}
+.history-slot-group{margin-bottom:10px}
+.history-slot-label{font-size:10px;color:var(--muted);letter-spacing:.08em;margin-bottom:4px}
+.history-entry-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;margin-bottom:4px}
+.history-entry-time{font-size:10px;color:var(--accent4);margin-bottom:3px}
+.history-entry-text{font-size:12px;color:var(--text);line-height:1.5;white-space:pre-wrap;word-break:break-word}
 
 /* STATS */
 .stats-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:12px}
@@ -237,7 +253,6 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 
 <main class="main" id="main">
 
-  <!-- TODAY -->
   <div class="view active" id="view-today">
     <div id="sleepArea"></div>
     <div class="day-toggle">
@@ -247,20 +262,12 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
     <div id="todayScoreCard"></div>
     <div id="cigCounter"></div>
     <div class="sec-label">Entries</div>
-    <button class="fab" onclick="openEntryModal()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Ny entry
-    </button>
-    <div id="todayEntries"></div>
+    <div class="slots-wrap" id="slotsWrap"></div>
   </div>
 
-  <!-- HISTORY -->
   <div class="view" id="view-history"><div id="historyList"></div></div>
-
-  <!-- STATS -->
   <div class="view" id="view-stats"><div id="statsContent"></div></div>
 
-  <!-- SETTINGS -->
   <div class="view" id="view-settings">
     <div class="install-banner" id="installBanner">
       <div class="install-title">📲 Installér som app</div>
@@ -293,7 +300,7 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
       </div>
     </div>
     <div style="margin-top:32px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);text-align:center">
-      <div style="font-family:var(--font-d);font-size:13px;color:var(--muted2)">LOG <span style="color:var(--accent);font-weight:700">v1.7</span></div>
+      <div style="font-family:var(--font-d);font-size:13px;color:var(--muted2)">LOG <span style="color:var(--accent);font-weight:700">v1.7b</span></div>
       <div id="swStatus" style="font-size:11px;color:var(--muted);margin-top:6px">Service worker: tjekker...</div>
     </div>
   </div>
@@ -347,10 +354,11 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
       <button class="modal-close" onclick="closeEntryModal()">×</button>
     </div>
     <div class="modal-body">
+      <div class="modal-prompt" id="entryPrompt" style="display:none"></div>
       <label class="form-label">Tidspunkt</label>
       <input type="datetime-local" id="entryTimeInput">
       <label class="form-label">Note</label>
-      <textarea class="entry-textarea" id="entryTextarea" placeholder="Hvad sker der..."></textarea>
+      <textarea class="entry-textarea" id="entryTextarea" placeholder="Skriv her..."></textarea>
       <div class="btn-row">
         <button class="btn-cancel" onclick="closeEntryModal()">Annuller</button>
         <button class="btn-primary" onclick="saveEntry()">Gem</button>
@@ -359,7 +367,7 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
   </div>
 </div>
 
-<!-- GODNAT OVERRIDE MODAL -->
+<!-- GODNAT MODAL -->
 <div class="modal-overlay" id="godnatModal">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -394,7 +402,7 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
       <label class="form-label">Vågnetidspunkt</label>
       <input type="datetime-local" id="godmorgenWakeInput">
       <label class="form-label" style="margin-top:14px">Søvnkvalitet</label>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:0">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px">
         <div class="sleep-score-header">
           <div class="sleep-score-lbl">Score 0–10</div>
           <div class="sleep-score-val zero" id="sleepScoreVal">–</div>
@@ -416,22 +424,35 @@ input[type="datetime-local"]:focus{border-color:var(--accent)}
 </div>
 
 <script>
-var VERSION = 'v1.7';
+var VERSION = 'v1.7b';
 var PARAMS = ['Baba','Kæreste','Norstat','Trading','Træning','Hus','Mental session'];
 
-// STATE
+// SLOTS — 9 slots 06-24, 2 hours each
+var SLOTS = [
+  {start:6,  end:8,  label:'06–08', prompt:'Hvad er dit fokus i dag?'},
+  {start:8,  end:10, label:'08–10', prompt:'Hvad er dit fokus i dag?'},
+  {start:10, end:12, label:'10–12', prompt:'Hvordan kører det?'},
+  {start:12, end:14, label:'12–14', prompt:'Hvordan kører det?'},
+  {start:14, end:16, label:'14–16', prompt:'Hvad har du fået fra hånden?'},
+  {start:16, end:18, label:'16–18', prompt:'Hvad har du fået fra hånden?'},
+  {start:18, end:20, label:'18–20', prompt:'Hvad tog energi / gav energi i dag?'},
+  {start:20, end:22, label:'20–22', prompt:'Hvad tog energi / gav energi i dag?'},
+  {start:22, end:24, label:'22–24', prompt:'Hvordan vil du afslutte dagen?'}
+];
+
 var entries   = JSON.parse(localStorage.getItem('log_entries')  || '[]');
 var scores    = JSON.parse(localStorage.getItem('log_scores')   || '{}');
 var cigs      = JSON.parse(localStorage.getItem('log_cigs')     || '{}');
-var sleepLog  = JSON.parse(localStorage.getItem('log_sleep')    || '{}'); // {dateKey: {bedtime, waketime, score, comment, duration, auto}}
-var sleepState= localStorage.getItem('log_sleep_state') || 'awake'; // 'awake' | 'sleeping'
+var sleepLog  = JSON.parse(localStorage.getItem('log_sleep')    || '{}');
+var sleepState= localStorage.getItem('log_sleep_state') || 'awake';
 var bedtime   = localStorage.getItem('log_bedtime') || null;
 var notifTime = localStorage.getItem('log_notif_time') || '21:00';
-var dayOffset = 0; // 0=today, 1=yesterday
+var dayOffset = 0;
 var editingEntryId = null;
 var editingScoreDate = null;
+var currentSlotIdx = null;
+var openSlots = {};
 var notifInterval = null;
-var clockInterval = null;
 var swReg = null;
 
 function persist() {
@@ -445,473 +466,426 @@ function persist() {
   else localStorage.removeItem('log_bedtime');
 }
 
-// DATE UTILS
 function dateKey(offset) {
   offset = offset || 0;
-  var d = new Date();
-  d.setDate(d.getDate() - offset);
+  var d = new Date(); d.setDate(d.getDate()-offset);
   return d.toISOString().slice(0,10);
 }
-function todayKey()     { return dateKey(0); }
-function yesterdayKey() { return dateKey(1); }
-function activeKey()    { return dateKey(dayOffset); }
+function todayKey()  { return dateKey(0); }
+function activeKey() { return dateKey(dayOffset); }
 
 function fmtTime(iso) { return new Date(iso).toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'}); }
 function fmtDate(ds)  { return new Date(ds+'T12:00:00').toLocaleDateString('da-DK',{weekday:'long',day:'numeric',month:'long'}); }
 function fmtDateShort(ds) { return new Date(ds+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'long'}); }
 function escH(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function toLocalISO(d) {
-  var p = function(n){return String(n).padStart(2,'0');};
+  var p=function(n){return String(n).padStart(2,'0');};
   return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());
 }
 function calcAvg(dk) {
-  var d = scores[dk]; if (!d) return '–';
-  var v = PARAMS.map(function(p){return d[p]&&d[p].score||0;}).filter(function(v){return v>0;});
-  if (!v.length) return '–';
-  return (v.reduce(function(a,b){return a+b;},0)/v.length).toFixed(1);
+  var d=scores[dk]; if(!d)return'–';
+  var v=PARAMS.map(function(p){return d[p]&&d[p].score||0;}).filter(function(v){return v>0;});
+  if(!v.length)return'–';
+  return(v.reduce(function(a,b){return a+b;},0)/v.length).toFixed(1);
 }
-function calcDuration(bed, wake) {
-  var diff = new Date(wake) - new Date(bed);
-  if (diff <= 0) return null;
-  var h = Math.floor(diff/3600000);
-  var m = Math.floor((diff%3600000)/60000);
+function calcDuration(bed,wake) {
+  var diff=new Date(wake)-new Date(bed);
+  if(diff<=0)return null;
+  var h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000);
   return h+'t '+m+'m';
 }
-
-// TIME WINDOW CHECKS
-function nowHHMM() {
-  var n = new Date();
-  return n.getHours()*60 + n.getMinutes();
-}
-function isGodnatTime() {
-  var m = nowHHMM();
-  return m >= 21*60+30 || m <= 2*60+30;
-}
-function isGodmorgenTime() {
-  var m = nowHHMM();
-  return m >= 5*60 && m <= 8*60;
-}
-
-// AUTO GODNAT — triggers at 02:30 if still awake
-function checkAutoGodnat() {
-  var n = new Date();
-  var h = n.getHours(), min = n.getMinutes();
-  if (h === 2 && min >= 30 && sleepState === 'awake') {
-    // Set auto bedtime to 02:30
-    var autoTime = new Date();
-    autoTime.setHours(2,30,0,0);
-    doGodnat(autoTime.toISOString(), true);
+function currentSlot() {
+  var h = new Date().getHours();
+  for (var i=0;i<SLOTS.length;i++) {
+    if (h>=SLOTS[i].start && h<SLOTS[i].end) return i;
   }
-  // Auto godmorgen — if still sleeping and it's past 08:00, register wake as first app open
-  if (h >= 8 && sleepState === 'sleeping') {
-    // Don't auto-trigger godmorgen — just show the button so user can register
-    // We only auto-set if they open the app for the first time after 08:00
-  }
+  return -1;
 }
+function slotEntries(dk, slotIdx) {
+  var s = SLOTS[slotIdx];
+  return entries.filter(function(e) {
+    if (e.createdAt.slice(0,10) !== dk) return false;
+    var h = new Date(e.createdAt).getHours();
+    return h >= s.start && h < s.end;
+  }).sort(function(a,b){return new Date(a.createdAt)-new Date(b.createdAt);});
+}
+function isGodnatTime() { var m=new Date().getHours()*60+new Date().getMinutes();return m>=21*60+30||m<=2*60+30; }
+function isGodmorgenTime() { var m=new Date().getHours()*60+new Date().getMinutes();return m>=5*60&&m<=8*60; }
 
 // HEADER
 function updateHeader() {
-  var d = new Date();
   document.getElementById('headerDate').textContent =
-    d.toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'}).toUpperCase();
-
-  var ak = activeKey();
-  var has = !!scores[ak];
-  var lbl = dayOffset === 0 ? 'I dag' : 'I går';
-  var ss = document.getElementById('scoreStatus');
-  ss.textContent = has ? '✓ '+lbl+' · Snit '+calcAvg(ak) : '○ '+lbl+' ikke scoret';
-  ss.className = 'score-status '+(has?'done':'pending');
-  document.getElementById('navDotToday').classList.toggle('show', !scores[todayKey()]);
-
-  // Sleep status in header
-  var sl = document.getElementById('sleepStatus');
-  if (sleepState === 'sleeping' && bedtime) {
-    sl.textContent = '🌙 Sover siden '+fmtTime(bedtime);
-  } else {
-    var ts = sleepLog[todayKey()];
-    if (ts && ts.duration) sl.textContent = '💤 '+ts.duration+' søvn';
-    else sl.textContent = '';
-  }
-
-  // Header color
-  var hdr = document.getElementById('appHeader');
-  if (sleepState === 'sleeping') hdr.className = 'app-header night';
-  else if (isGodmorgenTime()) hdr.className = 'app-header morning';
-  else hdr.className = 'app-header';
+    new Date().toLocaleDateString('da-DK',{weekday:'short',day:'numeric',month:'short'}).toUpperCase();
+  var ak=activeKey(), has=!!scores[ak], lbl=dayOffset===0?'I dag':'I går';
+  var ss=document.getElementById('scoreStatus');
+  ss.textContent=has?'✓ '+lbl+' · Snit '+calcAvg(ak):'○ '+lbl+' ikke scoret';
+  ss.className='score-status '+(has?'done':'pending');
+  document.getElementById('navDotToday').classList.toggle('show',!scores[todayKey()]);
+  var sl=document.getElementById('sleepStatus');
+  if(sleepState==='sleeping'&&bedtime)sl.textContent='🌙 Sover siden '+fmtTime(bedtime);
+  else{var ts=sleepLog[todayKey()];sl.textContent=(ts&&ts.duration)?'💤 '+ts.duration+' søvn':'';}
+  var hdr=document.getElementById('appHeader');
+  hdr.className='app-header'+(sleepState==='sleeping'?' night':isGodmorgenTime()?' morning':'');
 }
 
 // VIEWS
-function switchView(name, btn) {
+function switchView(name,btn) {
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
   document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('view-'+name).classList.add('active');
   btn.classList.add('active');
-  if (name==='today')    renderToday();
-  if (name==='history')  renderHistory();
-  if (name==='stats')    renderStats();
-  if (name==='settings') renderSettingsView();
-  document.getElementById('main').scrollTop = 0;
+  if(name==='today')    renderToday();
+  if(name==='history')  renderHistory();
+  if(name==='stats')    renderStats();
+  if(name==='settings') renderSettingsView();
+  document.getElementById('main').scrollTop=0;
 }
 
-// DAY TOGGLE
 function setDay(offset) {
-  dayOffset = offset;
-  document.getElementById('btnIdag').classList.toggle('active', offset===0);
-  document.getElementById('btnIgaar').classList.toggle('active', offset===1);
-  updateHeader();
-  renderScoreCard();
-  renderCigCounter();
-  renderTodayEntries();
+  dayOffset=offset;
+  document.getElementById('btnIdag').classList.toggle('active',offset===0);
+  document.getElementById('btnIgaar').classList.toggle('active',offset===1);
+  updateHeader(); renderScoreCard(); renderCigCounter(); renderSlots();
 }
 
 // TODAY
-function renderToday() {
-  renderSleepArea();
-  renderScoreCard();
-  renderCigCounter();
-  renderTodayEntries();
-}
+function renderToday() { renderSleepArea(); renderScoreCard(); renderCigCounter(); renderSlots(); }
 
 // SLEEP AREA
 function renderSleepArea() {
-  var el = document.getElementById('sleepArea');
-  var html = '';
-
-  if (sleepState === 'sleeping') {
-    // Show godmorgen button if in window, always show override
-    if (isGodmorgenTime()) {
-      html += '<button class="godmorgen-btn" onclick="openGodmorgen()"><span>🌅 Godmorgen</span><span style="font-size:12px;font-weight:400;opacity:.7">Registrér opvågning</span></button>';
-    }
-    html += '<span class="sleep-override-link" onclick="openGodmorgen()">🌅 Sæt vågnetidspunkt manuelt</span>';
+  var el=document.getElementById('sleepArea'), html='';
+  if(sleepState==='sleeping') {
+    if(isGodmorgenTime()) html+='<button class="godmorgen-btn" onclick="openGodmorgen()"><span>🌅 Godmorgen</span><span style="font-size:12px;font-weight:400;opacity:.7">Registrér opvågning</span></button>';
+    html+='<span class="sleep-override-link" onclick="openGodmorgen()">🌅 Sæt vågnetidspunkt manuelt</span>';
   } else {
-    // Show godnat button if in window, always show override
-    if (isGodnatTime()) {
-      html += '<button class="godnat-btn" onclick="openGodnat(false)"><span>🌙 Godnat</span><span style="font-size:12px;font-weight:400;opacity:.7">Lås dagens score</span></button>';
-    }
-    html += '<span class="sleep-override-link" onclick="openGodnat(true)">🌙 Sæt sovetidspunkt manuelt</span>';
+    if(isGodnatTime()) html+='<button class="godnat-btn" onclick="openGodnat()"><span>🌙 Godnat</span><span style="font-size:12px;font-weight:400;opacity:.7">Lås dagens score</span></button>';
+    html+='<span class="sleep-override-link" onclick="openGodnat()">🌙 Sæt sovetidspunkt manuelt</span>';
   }
-
-  // Show today sleep info if available
-  var ts = sleepLog[todayKey()];
-  if (ts && (ts.bedtime || ts.waketime)) {
-    var parts = [];
-    if (ts.bedtime)  parts.push('Sov: '+fmtTime(ts.bedtime));
-    if (ts.waketime) parts.push('Vågnet: '+fmtTime(ts.waketime));
-    if (ts.duration) parts.push('Varighed: '+ts.duration);
-    html += '<div class="sleep-info-bar"><div class="sleep-info-text">'+parts.join(' &nbsp;·&nbsp; ')+(ts.comment?'<br><em style="color:var(--muted)">'+escH(ts.comment)+'</em>':'')+'</div>'+(ts.score?'<div class="sleep-info-score">'+ts.score+'<span style="font-size:11px;font-weight:400;color:var(--muted)">/10</span></div>':'')+'</div>';
+  var ts=sleepLog[todayKey()];
+  if(ts&&(ts.bedtime||ts.waketime)) {
+    var parts=[];
+    if(ts.bedtime)parts.push('Sov: '+fmtTime(ts.bedtime));
+    if(ts.waketime)parts.push('Vågnet: '+fmtTime(ts.waketime));
+    if(ts.duration)parts.push('Varighed: '+ts.duration);
+    html+='<div class="sleep-info-bar"><div class="sleep-info-text">'+parts.join(' · ')+(ts.comment?'<br><em style="color:var(--muted)">'+escH(ts.comment)+'</em>':'')+'</div>'+(ts.score?'<div class="sleep-info-score">'+ts.score+'<span style="font-size:11px;font-weight:400;color:var(--muted)">/10</span></div>':'')+'</div>';
   }
-
-  el.innerHTML = html;
+  el.innerHTML=html;
 }
 
 // GODNAT
-function openGodnat(manual) {
-  var now = new Date();
-  document.getElementById('godnatTimeInput').value = toLocalISO(now);
+function openGodnat() {
+  document.getElementById('godnatTimeInput').value=toLocalISO(new Date());
   document.getElementById('godnatModal').classList.add('open');
 }
-
 function saveGodnat() {
-  var val = document.getElementById('godnatTimeInput').value;
-  var iso = val ? new Date(val).toISOString() : new Date().toISOString();
-  doGodnat(iso, false);
-  closeGodnat();
+  var val=document.getElementById('godnatTimeInput').value;
+  var iso=val?new Date(val).toISOString():new Date().toISOString();
+  sleepState='sleeping'; bedtime=iso;
+  var dk=todayKey(); if(!sleepLog[dk])sleepLog[dk]={};
+  sleepLog[dk].bedtime=iso; persist(); closeGodnat(); updateHeader(); renderSleepArea();
 }
+function closeGodnat() { document.getElementById('godnatModal').classList.remove('open'); }
 
-function doGodnat(iso, isAuto) {
-  sleepState = 'sleeping';
-  bedtime = iso;
-  var dk = todayKey();
-  if (!sleepLog[dk]) sleepLog[dk] = {};
-  sleepLog[dk].bedtime = iso;
-  sleepLog[dk].auto = isAuto || false;
-  persist();
-  updateHeader();
-  renderSleepArea();
-}
-
-function closeGodnat() {
-  document.getElementById('godnatModal').classList.remove('open');
+// AUTO GODNAT
+function checkAutoGodnat() {
+  var n=new Date(), h=n.getHours(), m=n.getMinutes();
+  if(h===2&&m>=30&&sleepState==='awake') {
+    var t=new Date(); t.setHours(2,30,0,0);
+    sleepState='sleeping'; bedtime=t.toISOString();
+    var dk=todayKey(); if(!sleepLog[dk])sleepLog[dk]={};
+    sleepLog[dk].bedtime=t.toISOString(); sleepLog[dk].auto=true;
+    persist(); updateHeader(); renderSleepArea();
+  }
 }
 
 // GODMORGEN
 function openGodmorgen() {
-  var now = new Date();
-  document.getElementById('godmorgenWakeInput').value = toLocalISO(now);
-  document.getElementById('sleepScoreSlider').value = 0;
-  document.getElementById('sleepScoreVal').textContent = '–';
-  document.getElementById('sleepScoreVal').className = 'sleep-score-val zero';
-  document.getElementById('sleepComment').value = '';
-  // Calc duration with current time
+  document.getElementById('godmorgenWakeInput').value=toLocalISO(new Date());
+  document.getElementById('sleepScoreSlider').value=0;
+  document.getElementById('sleepScoreVal').textContent='–';
+  document.getElementById('sleepScoreVal').className='sleep-score-val zero';
+  document.getElementById('sleepComment').value='';
   updateGodmorgenDuration();
   document.getElementById('godmorgenModal').classList.add('open');
 }
-
 function updateGodmorgenDuration() {
-  var wakeVal = document.getElementById('godmorgenWakeInput').value;
-  var wakeISO = wakeVal ? new Date(wakeVal).toISOString() : new Date().toISOString();
-  var dur = bedtime ? calcDuration(bedtime, wakeISO) : null;
-  document.getElementById('sleepDurNum').textContent = dur || '–';
+  var v=document.getElementById('godmorgenWakeInput').value;
+  var iso=v?new Date(v).toISOString():new Date().toISOString();
+  document.getElementById('sleepDurNum').textContent=bedtime?calcDuration(bedtime,iso)||'–':'–';
 }
-
 function updateSleepScore(s) {
-  var v = parseInt(s.value);
-  var el = document.getElementById('sleepScoreVal');
-  el.textContent = v===0?'–':v;
-  el.className = 'sleep-score-val'+(v===0?' zero':'');
+  var v=parseInt(s.value), el=document.getElementById('sleepScoreVal');
+  el.textContent=v===0?'–':v; el.className='sleep-score-val'+(v===0?' zero':'');
 }
-
 function saveGodmorgen() {
-  var wakeVal = document.getElementById('godmorgenWakeInput').value;
-  var wakeISO = wakeVal ? new Date(wakeVal).toISOString() : new Date().toISOString();
-  var score   = parseInt(document.getElementById('sleepScoreSlider').value);
-  var comment = document.getElementById('sleepComment').value.trim();
-  var dur     = bedtime ? calcDuration(bedtime, wakeISO) : null;
-  var dk      = todayKey();
-
-  if (!sleepLog[dk]) sleepLog[dk] = {};
-  sleepLog[dk].waketime = wakeISO;
-  sleepLog[dk].score    = score;
-  sleepLog[dk].comment  = comment;
-  sleepLog[dk].duration = dur;
-  if (bedtime) sleepLog[dk].bedtime = bedtime;
-
-  sleepState = 'awake';
-  bedtime = null;
-  persist();
-  closeGodmorgen();
-  updateHeader();
-  renderSleepArea();
+  var v=document.getElementById('godmorgenWakeInput').value;
+  var iso=v?new Date(v).toISOString():new Date().toISOString();
+  var score=parseInt(document.getElementById('sleepScoreSlider').value);
+  var comment=document.getElementById('sleepComment').value.trim();
+  var dur=bedtime?calcDuration(bedtime,iso):null;
+  var dk=todayKey(); if(!sleepLog[dk])sleepLog[dk]={};
+  sleepLog[dk].waketime=iso; sleepLog[dk].score=score;
+  sleepLog[dk].comment=comment; sleepLog[dk].duration=dur;
+  if(bedtime)sleepLog[dk].bedtime=bedtime;
+  sleepState='awake'; bedtime=null;
+  persist(); closeGodmorgen(); updateHeader(); renderSleepArea();
 }
-
-function closeGodmorgen() {
-  document.getElementById('godmorgenModal').classList.remove('open');
-}
+function closeGodmorgen() { document.getElementById('godmorgenModal').classList.remove('open'); }
 
 // SCORE CARD
 function renderScoreCard() {
-  var el = document.getElementById('todayScoreCard');
-  var dk = activeKey();
-  var day = scores[dk];
-  var lbl = dayOffset===0 ? 'Dagens score' : 'Gårsdagens score';
-  if (!day) {
-    el.innerHTML = '<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">'+lbl+'</div><div class="today-score-badge pending">Udfyld nu</div></div><div style="padding:0 16px 14px;font-size:12px;color:var(--muted)">Tryk for at score dine 7 parametre</div></div>';
-    return;
-  }
-  var chips = PARAMS.map(function(p){return '<div class="score-mini-chip">'+p+' <span class="score-mini-val">'+(day[p]&&day[p].score||'–')+'</span></div>';}).join('');
-  el.innerHTML = '<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">'+lbl+'</div><div class="today-score-badge done">✓ Snit '+calcAvg(dk)+'</div></div><div class="score-summary-row">'+chips+'</div></div>';
+  var el=document.getElementById('todayScoreCard'), dk=activeKey(), day=scores[dk];
+  var lbl=dayOffset===0?'Dagens score':'Gårsdagens score';
+  if(!day){el.innerHTML='<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">'+lbl+'</div><div class="today-score-badge pending">Udfyld nu</div></div><div style="padding:0 16px 14px;font-size:12px;color:var(--muted)">Tryk for at score dine 7 parametre</div></div>';return;}
+  var chips=PARAMS.map(function(p){return'<div class="score-mini-chip">'+p+' <span class="score-mini-val">'+(day[p]&&day[p].score||'–')+'</span></div>';}).join('');
+  el.innerHTML='<div class="today-score-card" onclick="openScoreModal(null)"><div class="today-score-header"><div class="today-score-title">'+lbl+'</div><div class="today-score-badge done">✓ Snit '+calcAvg(dk)+'</div></div><div class="score-summary-row">'+chips+'</div></div>';
 }
 
-// CIG COUNTER
+// CIG
 function renderCigCounter() {
-  var el = document.getElementById('cigCounter');
-  var dk = activeKey();
-  var todayCigs = cigs[dk] || [];
-  var count = todayCigs.length;
-  var lastTime = count > 0 ? fmtTime(todayCigs[todayCigs.length-1]) : null;
-  var chips = todayCigs.map(function(iso){return '<span class="cig-time-chip">'+fmtTime(iso)+'</span>';}).join('');
-  el.innerHTML = '<div class="cig-row"><div class="cig-left"><div class="cig-icon">🚬</div><div><div class="cig-label">Cigaretpauser</div><div class="cig-sub">'+(lastTime?'Sidst: '+lastTime:'Ingen endnu')+'</div>'+(count>0?'<div class="cig-times">'+chips+'</div>':'')+'</div></div><div class="cig-right"><div class="cig-count">'+count+'</div><button class="cig-btn" onclick="addCig()">+</button></div></div>';
+  var el=document.getElementById('cigCounter'), dk=activeKey();
+  var tc=cigs[dk]||[], count=tc.length, last=count>0?fmtTime(tc[tc.length-1]):null;
+  var chips=tc.map(function(iso){return'<span class="cig-time-chip">'+fmtTime(iso)+'</span>';}).join('');
+  el.innerHTML='<div class="cig-row"><div class="cig-left"><div class="cig-icon">🚬</div><div><div class="cig-label">Cigaretpauser</div><div class="cig-sub">'+(last?'Sidst: '+last:'Ingen endnu')+'</div>'+(count>0?'<div class="cig-times">'+chips+'</div>':'')+'</div></div><div class="cig-right"><div class="cig-count">'+count+'</div><button class="cig-btn" onclick="addCig()">+</button></div></div>';
 }
-
 function addCig() {
-  var dk = activeKey();
-  if (!cigs[dk]) cigs[dk] = [];
-  cigs[dk].push(new Date().toISOString());
-  persist(); renderCigCounter();
+  var dk=activeKey(); if(!cigs[dk])cigs[dk]=[];
+  cigs[dk].push(new Date().toISOString()); persist(); renderCigCounter();
 }
 
-// ENTRIES
-function renderTodayEntries() {
-  var dk = activeKey();
-  var ts = entries.filter(function(e){return e.createdAt.slice(0,10)===dk;}).sort(function(a,b){return new Date(b.createdAt)-new Date(a.createdAt);});
-  var el = document.getElementById('todayEntries');
-  if (!ts.length) { el.innerHTML = '<div class="empty-day">Ingen entries endnu.<br>Skriv hvad der sker.</div>'; return; }
-  el.innerHTML = ts.map(function(e){
-    return '<div class="entry-card"><div class="entry-header"><div class="entry-time" onclick="openEntryModal(\''+e.id+'\')">'+fmtTime(e.createdAt)+'</div><div class="entry-actions"><button class="entry-btn" onclick="openEntryModal(\''+e.id+'\')">✎</button><button class="entry-btn del" onclick="deleteEntry(\''+e.id+'\')">×</button></div></div><div class="entry-text">'+escH(e.text)+'</div></div>';
+// SLOTS
+function renderSlots() {
+  var dk=activeKey(), curSlot=dayOffset===0?currentSlot():-1;
+  var el=document.getElementById('slotsWrap');
+  el.innerHTML=SLOTS.map(function(slot,i){
+    var isCur=i===curSlot;
+    var slotEs=slotEntries(dk,i);
+    var count=slotEs.length;
+    var isOpen=openSlots[i]||isCur||count>0;
+    var headerClass='slot-card'+(isCur?' active-slot':'')+(count>0?' has-entries':'');
+    var timeClass='slot-time'+(isCur?' current':'');
+    var promptClass='slot-prompt'+(isCur?' current':'');
+    var addClass='slot-add'+(isCur?' current-add':'');
+
+    var entriesHTML='';
+    if(isOpen){
+      entriesHTML='<div class="slot-entries open" id="slotEntries_'+i+'">';
+      if(count===0){entriesHTML+='<div class="slot-empty">Ingen entries endnu i dette slot.</div>';}
+      else{entriesHTML+=slotEs.map(function(e){
+        return'<div class="slot-entry"><div class="slot-entry-body"><div class="slot-entry-time">'+fmtTime(e.createdAt)+'</div><div class="slot-entry-text">'+escH(e.text)+'</div></div><div class="slot-entry-actions"><button class="slot-entry-btn" onclick="openEntryModal(\''+e.id+'\','+i+')">✎</button><button class="slot-entry-btn del" onclick="deleteEntry(\''+e.id+'\')">×</button></div></div>';
+      }).join('');}
+      entriesHTML+='</div>';
+    } else {
+      entriesHTML='<div class="slot-entries" id="slotEntries_'+i+'"></div>';
+    }
+
+    return'<div class="'+headerClass+'" id="slotCard_'+i+'">'+
+      '<div class="slot-header" onclick="toggleSlot('+i+')">'+
+        '<div class="slot-left">'+
+          '<div class="'+timeClass+'">'+slot.label+'</div>'+
+          '<div class="'+promptClass+'">'+slot.prompt+'</div>'+
+        '</div>'+
+        '<div class="slot-right">'+
+          (count>0?'<div class="slot-count">'+count+'</div>':'')+
+          '<button class="'+addClass+'" onclick="event.stopPropagation();openEntryModal(null,'+i+')">+</button>'+
+        '</div>'+
+      '</div>'+
+      entriesHTML+
+    '</div>';
   }).join('');
 }
 
-// SCORE MODAL
-function openScoreModal(dateKey) {
-  editingScoreDate = dateKey || activeKey();
-  var day = scores[editingScoreDate] || {};
-  var isHistoric = editingScoreDate !== todayKey();
-  document.getElementById('scoreModalTitle').textContent = isHistoric ? 'Score · '+fmtDateShort(editingScoreDate) : (dayOffset===1?'Gårsdagens score':'Dagens score');
-  document.getElementById('scoreInputs').innerHTML = PARAMS.map(function(p){
-    var v = (day[p]&&day[p].score)||0;
-    var n = (day[p]&&day[p].note)||'';
-    var safe = p.replace(/\s/g,'_').replace(/æ/g,'ae').replace(/ø/g,'oe').replace(/å/g,'aa').replace(/Æ/g,'AE').replace(/Ø/g,'OE').replace(/Å/g,'AA');
-    return '<div class="score-item"><div class="score-item-header"><div class="score-item-name">'+p+'</div><div class="score-item-val '+(v===0?'zero':'')+'" id="sv_'+safe+'">'+(v||'–')+'</div></div><div class="slider-wrap"><span class="slider-min">0</span><input type="range" min="0" max="10" value="'+v+'" data-param="'+p+'" data-safe="'+safe+'" oninput="updateScoreVal(this)"><span class="slider-max">10</span></div><textarea class="score-note-input" data-note="'+p+'" placeholder="Note til '+p+'...">'+escH(n)+'</textarea></div>';
-  }).join('');
-  document.getElementById('scoreModal').classList.add('open');
+function toggleSlot(i) {
+  openSlots[i] = !openSlots[i];
+  renderSlots();
 }
-
-function updateScoreVal(s) {
-  var el = document.getElementById('sv_'+s.dataset.safe);
-  var v = parseInt(s.value);
-  el.textContent = v===0?'–':v;
-  el.className = 'score-item-val'+(v===0?' zero':'');
-}
-
-function saveScores() {
-  var day = {};
-  PARAMS.forEach(function(p){
-    var slider = document.querySelector('input[data-param="'+p+'"]');
-    var note   = document.querySelector('textarea[data-note="'+p+'"]');
-    day[p] = {score:parseInt(slider.value), note:note.value.trim()};
-  });
-  scores[editingScoreDate] = day;
-  persist(); closeScoreModal(); updateHeader();
-  if (editingScoreDate===activeKey()) renderScoreCard(); else renderHistory();
-}
-
-function closeScoreModal() { document.getElementById('scoreModal').classList.remove('open'); }
 
 // ENTRY MODAL
-function openEntryModal(id) {
-  id = id || null;
-  editingEntryId = id;
+function openEntryModal(id, slotIdx) {
+  if(slotIdx===undefined)slotIdx=null;
+  currentSlotIdx = slotIdx !== null ? slotIdx : (dayOffset===0?currentSlot():null);
+  editingEntryId = id || null;
   var e = id ? entries.find(function(e){return e.id===id;}) : null;
-  document.getElementById('entryModalTitle').textContent = id ? 'Rediger entry' : 'Ny entry';
-  document.getElementById('entryTextarea').value = e ? e.text : '';
-  document.getElementById('entryTimeInput').value = toLocalISO(e ? new Date(e.createdAt) : new Date());
+  document.getElementById('entryModalTitle').textContent = id?'Rediger entry':'Ny entry';
+  document.getElementById('entryTextarea').value = e?e.text:'';
+
+  // Set time — if slot, default to start of slot or now if current
+  var now = new Date();
+  if(e) {
+    document.getElementById('entryTimeInput').value = toLocalISO(new Date(e.createdAt));
+  } else if(currentSlotIdx!==null) {
+    var s=SLOTS[currentSlotIdx];
+    var t=new Date();
+    if(now.getHours()>=s.start&&now.getHours()<s.end) {
+      document.getElementById('entryTimeInput').value=toLocalISO(now);
+    } else {
+      t.setHours(s.start,0,0,0);
+      document.getElementById('entryTimeInput').value=toLocalISO(t);
+    }
+  } else {
+    document.getElementById('entryTimeInput').value=toLocalISO(now);
+  }
+
+  // Show prompt
+  var promptEl=document.getElementById('entryPrompt');
+  if(currentSlotIdx!==null&&!id) {
+    promptEl.textContent=SLOTS[currentSlotIdx].prompt;
+    promptEl.style.display='block';
+  } else {
+    promptEl.style.display='none';
+  }
+
   document.getElementById('entryModal').classList.add('open');
-  setTimeout(function(){document.getElementById('entryTextarea').focus();}, 300);
+  setTimeout(function(){document.getElementById('entryTextarea').focus();},300);
 }
 
 function saveEntry() {
-  var text = document.getElementById('entryTextarea').value.trim();
-  var timeVal = document.getElementById('entryTimeInput').value;
-  if (!text) { closeEntryModal(); return; }
-  var iso = timeVal ? new Date(timeVal).toISOString() : new Date().toISOString();
-  if (editingEntryId) {
-    var idx = entries.findIndex(function(e){return e.id===editingEntryId;});
-    if (idx > -1) { entries[idx].text = text; entries[idx].createdAt = iso; }
+  var text=document.getElementById('entryTextarea').value.trim();
+  var timeVal=document.getElementById('entryTimeInput').value;
+  if(!text){closeEntryModal();return;}
+  var iso=timeVal?new Date(timeVal).toISOString():new Date().toISOString();
+  if(editingEntryId){
+    var idx=entries.findIndex(function(e){return e.id===editingEntryId;});
+    if(idx>-1){entries[idx].text=text;entries[idx].createdAt=iso;}
   } else {
-    entries.unshift({id: Date.now().toString(), createdAt: iso, text: text});
+    entries.unshift({id:Date.now().toString(),createdAt:iso,text:text});
   }
-  persist(); closeEntryModal(); renderTodayEntries();
+  persist(); closeEntryModal(); renderSlots();
 }
 
 function deleteEntry(id) {
-  if (!confirm('Slet denne entry?')) return;
-  entries = entries.filter(function(e){return e.id!==id;});
-  persist(); renderTodayEntries();
+  if(!confirm('Slet denne entry?'))return;
+  entries=entries.filter(function(e){return e.id!==id;});
+  persist(); renderSlots();
 }
 
 function closeEntryModal() {
   document.getElementById('entryModal').classList.remove('open');
-  editingEntryId = null;
+  editingEntryId=null; currentSlotIdx=null;
 }
+
+// SCORE MODAL
+function openScoreModal(dateKey) {
+  editingScoreDate=dateKey||activeKey();
+  var day=scores[editingScoreDate]||{};
+  var isHistoric=editingScoreDate!==todayKey();
+  document.getElementById('scoreModalTitle').textContent=isHistoric?'Score · '+fmtDateShort(editingScoreDate):(dayOffset===1?'Gårsdagens score':'Dagens score');
+  document.getElementById('scoreInputs').innerHTML=PARAMS.map(function(p){
+    var v=(day[p]&&day[p].score)||0, n=(day[p]&&day[p].note)||'';
+    var safe=p.replace(/\s/g,'_').replace(/æ/g,'ae').replace(/ø/g,'oe').replace(/å/g,'aa').replace(/Æ/g,'AE').replace(/Ø/g,'OE').replace(/Å/g,'AA');
+    return'<div class="score-item"><div class="score-item-header"><div class="score-item-name">'+p+'</div><div class="score-item-val '+(v===0?'zero':'')+'" id="sv_'+safe+'">'+(v||'–')+'</div></div><div class="slider-wrap"><span class="slider-min">0</span><input type="range" min="0" max="10" value="'+v+'" data-param="'+p+'" data-safe="'+safe+'" oninput="updateScoreVal(this)"><span class="slider-max">10</span></div><textarea class="score-note-input" data-note="'+p+'" placeholder="Note til '+p+'...">'+escH(n)+'</textarea></div>';
+  }).join('');
+  document.getElementById('scoreModal').classList.add('open');
+}
+function updateScoreVal(s) {
+  var el=document.getElementById('sv_'+s.dataset.safe), v=parseInt(s.value);
+  el.textContent=v===0?'–':v; el.className='score-item-val'+(v===0?' zero':'');
+}
+function saveScores() {
+  var day={};
+  PARAMS.forEach(function(p){
+    var slider=document.querySelector('input[data-param="'+p+'"]');
+    var note=document.querySelector('textarea[data-note="'+p+'"]');
+    day[p]={score:parseInt(slider.value),note:note.value.trim()};
+  });
+  scores[editingScoreDate]=day; persist(); closeScoreModal(); updateHeader();
+  if(editingScoreDate===activeKey())renderScoreCard(); else renderHistory();
+}
+function closeScoreModal() { document.getElementById('scoreModal').classList.remove('open'); }
 
 // HISTORY
 function renderHistory() {
-  var el = document.getElementById('historyList');
-  var allDays = {};
+  var el=document.getElementById('historyList');
+  var allDays={};
   Object.keys(scores).forEach(function(d){allDays[d]=1;});
   entries.forEach(function(e){allDays[e.createdAt.slice(0,10)]=1;});
   Object.keys(cigs).forEach(function(d){allDays[d]=1;});
   Object.keys(sleepLog).forEach(function(d){allDays[d]=1;});
-  var days = Object.keys(allDays).sort(function(a,b){return b.localeCompare(a);});
-  if (!days.length) { el.innerHTML='<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Ingen data endnu.</div>'; return; }
-  el.innerHTML = days.map(function(day){
-    var ds = scores[day];
-    var de = entries.filter(function(e){return e.createdAt.slice(0,10)===day;}).sort(function(a,b){return new Date(b.createdAt)-new Date(a.createdAt);});
-    var dc = cigs[day]||[];
-    var sl = sleepLog[day];
-    var badges = '';
-    if (ds) badges += '<div class="history-avg">Snit '+calcAvg(day)+'</div>';
-    if (dc.length) badges += '<div class="history-cig">🚬 '+dc.length+'</div>';
-    if (sl&&sl.duration) badges += '<div class="history-sleep">💤 '+sl.duration+(sl.score?' · '+sl.score+'/10':'')+'</div>';
-    var sh = '';
-    if (ds) {
-      var rows = PARAMS.map(function(p){
-        var s=(ds[p]&&ds[p].score)||0; var n=(ds[p]&&ds[p].note)||'';
-        return '<div class="history-score-row"><span class="history-score-name">'+p+'</span><span class="history-score-val '+(s===0?'zero':'')+'">'+( s||'–')+'</span></div>'+(n?'<div class="history-score-note" style="grid-column:1/-1">'+escH(n)+'</div>':'');
+  var days=Object.keys(allDays).sort(function(a,b){return b.localeCompare(a);});
+  if(!days.length){el.innerHTML='<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Ingen data endnu.</div>';return;}
+  el.innerHTML=days.map(function(day){
+    var ds=scores[day], dc=cigs[day]||[], sl=sleepLog[day];
+    var de=entries.filter(function(e){return e.createdAt.slice(0,10)===day;});
+    var badges='';
+    if(ds)badges+='<div class="history-avg">Snit '+calcAvg(day)+'</div>';
+    if(dc.length)badges+='<div class="history-cig">🚬 '+dc.length+'</div>';
+    if(sl&&sl.duration)badges+='<div class="history-sleep">💤 '+sl.duration+(sl.score?' · '+sl.score+'/10':'')+'</div>';
+    var sh='';
+    if(ds){
+      var rows=PARAMS.map(function(p){
+        var s=(ds[p]&&ds[p].score)||0, n=(ds[p]&&ds[p].note)||'';
+        return'<div class="history-score-row"><span class="history-score-name">'+p+'</span><span class="history-score-val '+(s===0?'zero':'')+'">'+( s||'–')+'</span></div>'+(n?'<div class="history-score-note" style="grid-column:1/-1">'+escH(n)+'</div>':'');
       }).join('');
-      sh = (badges?'<div style="display:flex;flex-wrap:wrap;margin-bottom:8px">'+badges+'</div>':'')+'<div class="history-scores"><button class="history-edit-btn" onclick="openScoreModal(\''+day+'\')">✎</button><div class="history-score-grid">'+rows+'</div></div>';
+      sh=(badges?'<div style="display:flex;flex-wrap:wrap;margin-bottom:8px">'+badges+'</div>':'')+'<div class="history-scores"><button class="history-edit-btn" onclick="openScoreModal(\''+day+'\')">✎</button><div class="history-score-grid">'+rows+'</div></div>';
     } else {
-      sh = badges ? '<div style="display:flex;flex-wrap:wrap;margin-bottom:8px">'+badges+'</div>' : '';
+      sh=badges?'<div style="display:flex;flex-wrap:wrap;margin-bottom:8px">'+badges+'</div>':'';
     }
-    if (sl&&sl.comment) {
-      sh += '<div class="entry-card" style="border-color:rgba(139,156,244,.25)"><div class="entry-header"><div class="entry-time" style="color:var(--accent4)">💤 Søvn</div></div><div class="entry-text">'+escH(sl.comment)+'</div></div>';
-    }
-    var eh = de.map(function(e){return '<div class="entry-card"><div class="entry-header"><div class="entry-time">'+fmtTime(e.createdAt)+'</div></div><div class="entry-text">'+escH(e.text)+'</div></div>';}).join('');
-    return '<div class="day-group"><div class="day-header"><div class="day-name">'+fmtDate(day)+'</div><div class="day-meta">'+de.length+' entries</div></div>'+sh+eh+'</div>';
+    if(sl&&sl.comment)sh+='<div class="history-entry-card" style="border-color:rgba(139,156,244,.25);margin-bottom:8px"><div class="history-entry-time" style="color:var(--accent4)">💤 Søvn</div><div class="history-entry-text">'+escH(sl.comment)+'</div></div>';
+
+    // Group entries by slot
+    var slotHTML='';
+    SLOTS.forEach(function(slot,i){
+      var se=de.filter(function(e){var h=new Date(e.createdAt).getHours();return h>=slot.start&&h<slot.end;}).sort(function(a,b){return new Date(a.createdAt)-new Date(b.createdAt);});
+      if(se.length){
+        slotHTML+='<div class="history-slot-group"><div class="history-slot-label">'+slot.label+' — '+slot.prompt+'</div>'+
+          se.map(function(e){return'<div class="history-entry-card"><div class="history-entry-time">'+fmtTime(e.createdAt)+'</div><div class="history-entry-text">'+escH(e.text)+'</div></div>';}).join('')+'</div>';
+      }
+    });
+
+    return'<div class="day-group"><div class="day-header"><div class="day-name">'+fmtDate(day)+'</div><div class="day-meta">'+de.length+' entries</div></div>'+sh+slotHTML+'</div>';
   }).join('');
 }
 
 // STATS
-var activeParam = PARAMS[0];
-
+var activeParam=PARAMS[0];
 function renderStats() {
-  var el = document.getElementById('statsContent');
-  var sdays = Object.keys(scores).sort();
-  if (sdays.length < 2) { el.innerHTML='<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Udfyld mindst 2 dages scores<br>for at se statistik.</div>'; return; }
-  var streak = calcStreak();
-  var oa = (sdays.reduce(function(s,d){var a=parseFloat(calcAvg(d));return s+(isNaN(a)?0:a);},0)/sdays.length).toFixed(1);
-  var totalCigs = Object.values(cigs).reduce(function(s,v){return s+v.length;},0);
-  var sleepScores = Object.values(sleepLog).filter(function(s){return s.score>0;});
-  var avgSleep = sleepScores.length ? (sleepScores.reduce(function(s,v){return s+(v.score||0);},0)/sleepScores.length).toFixed(1) : '–';
-  var tabs = PARAMS.map(function(p){return '<div class="param-tab '+(p===activeParam?'active':'')+'" onclick="setStatParam(\''+p+'\')">'+p+'</div>';}).join('');
-  var l14 = getLast14();
-  var pv = l14.map(function(d){return scores[d]&&scores[d][activeParam]?scores[d][activeParam].score:null;});
-  var svg = buildLineSVG(pv);
-  var lbls = l14.map(function(d,i){return i%3===0?new Date(d+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'numeric'}).slice(0,-1):'';});
-  var avgs = PARAMS.map(function(p){
-    var v=sdays.map(function(d){return scores[d]&&scores[d][p]?scores[d][p].score:0;}).filter(function(v){return v>0;});
-    if(!v.length)return null;
-    return{p:p,avg:(v.reduce(function(a,b){return a+b;},0)/v.length).toFixed(1)};
-  }).filter(function(x){return x;});
-  el.innerHTML =
+  var el=document.getElementById('statsContent');
+  var sdays=Object.keys(scores).sort();
+  if(sdays.length<2){el.innerHTML='<div style="text-align:center;padding:48px;color:var(--muted);font-size:13px">Udfyld mindst 2 dages scores<br>for at se statistik.</div>';return;}
+  var streak=calcStreak();
+  var oa=(sdays.reduce(function(s,d){var a=parseFloat(calcAvg(d));return s+(isNaN(a)?0:a);},0)/sdays.length).toFixed(1);
+  var totalCigs=Object.values(cigs).reduce(function(s,v){return s+v.length;},0);
+  var ss=Object.values(sleepLog).filter(function(s){return s.score>0;});
+  var avgSleep=ss.length?(ss.reduce(function(s,v){return s+(v.score||0);},0)/ss.length).toFixed(1):'–';
+  var tabs=PARAMS.map(function(p){return'<div class="param-tab '+(p===activeParam?'active':'')+'" onclick="setStatParam(\''+p+'\')">'+p+'</div>';}).join('');
+  var l14=getLast14();
+  var pv=l14.map(function(d){return scores[d]&&scores[d][activeParam]?scores[d][activeParam].score:null;});
+  var svg=buildLineSVG(pv);
+  var lbls=l14.map(function(d,i){return i%3===0?new Date(d+'T12:00:00').toLocaleDateString('da-DK',{day:'numeric',month:'numeric'}).slice(0,-1):'';});
+  var avgs=PARAMS.map(function(p){var v=sdays.map(function(d){return scores[d]&&scores[d][p]?scores[d][p].score:0;}).filter(function(v){return v>0;});if(!v.length)return null;return{p:p,avg:(v.reduce(function(a,b){return a+b;},0)/v.length).toFixed(1)};}).filter(function(x){return x;});
+  el.innerHTML=
     '<div class="streak-row"><div class="streak-card"><div class="streak-num">'+streak+'</div><div class="streak-label">Dages streak</div></div><div class="streak-card"><div class="streak-num">'+sdays.length+'</div><div class="streak-label">Dage scoret</div></div><div class="streak-card"><div class="streak-num">'+oa+'</div><div class="streak-label">Overall snit</div></div></div>'+
     '<div class="streak-row"><div class="streak-card" style="border-color:rgba(255,154,60,.3)"><div class="streak-num" style="color:var(--accent5)">'+totalCigs+'</div><div class="streak-label">Cigaretter total</div></div><div class="streak-card" style="border-color:rgba(139,156,244,.3)"><div class="streak-num" style="color:var(--accent4)">'+avgSleep+'</div><div class="streak-label">Søvnscore snit</div></div></div>'+
-    '<div class="stats-card"><div class="stats-title">Udvikling · seneste 14 dage</div><div class="param-tabs">'+tabs+'</div><div class="line-chart">'+svg+'</div><div class="chart-labels">'+lbls.map(function(l){return '<span class="chart-label">'+l+'</span>';}).join('')+'</div></div>'+
-    '<div class="stats-card"><div class="stats-title">Gennemsnit · alle tid</div>'+avgs.map(function(x){return '<div class="avg-item"><div class="avg-name">'+x.p+'</div><div class="avg-bar-bg"><div class="avg-bar-fill" style="width:'+x.avg*10+'%"></div></div><div class="avg-num">'+x.avg+'</div></div>';}).join('')+'</div>';
+    '<div class="stats-card"><div class="stats-title">Udvikling · seneste 14 dage</div><div class="param-tabs">'+tabs+'</div><div class="line-chart">'+svg+'</div><div class="chart-labels">'+lbls.map(function(l){return'<span class="chart-label">'+l+'</span>';}).join('')+'</div></div>'+
+    '<div class="stats-card"><div class="stats-title">Gennemsnit · alle tid</div>'+avgs.map(function(x){return'<div class="avg-item"><div class="avg-name">'+x.p+'</div><div class="avg-bar-bg"><div class="avg-bar-fill" style="width:'+x.avg*10+'%"></div></div><div class="avg-num">'+x.avg+'</div></div>';}).join('')+'</div>';
 }
-
-function setStatParam(p) { activeParam=p; renderStats(); }
-
-function getLast14() {
-  var d=[];for(var i=13;i>=0;i--){var x=new Date();x.setDate(x.getDate()-i);d.push(x.toISOString().slice(0,10));}return d;
-}
-
-function buildLineSVG(vals) {
+function setStatParam(p){activeParam=p;renderStats();}
+function getLast14(){var d=[];for(var i=13;i>=0;i--){var x=new Date();x.setDate(x.getDate()-i);d.push(x.toISOString().slice(0,10));}return d;}
+function buildLineSVG(vals){
   var w=100,h=90,n=vals.length;
   var valid=vals.filter(function(v){return v!==null;});
-  if(!valid.length)return '<svg viewBox="0 0 100 90"><text x="50" y="50" text-anchor="middle" fill="#5a5a7a" font-size="8" font-family="monospace">Ingen data endnu</text></svg>';
+  if(!valid.length)return'<svg viewBox="0 0 100 90"><text x="50" y="50" text-anchor="middle" fill="#5a5a7a" font-size="8" font-family="monospace">Ingen data endnu</text></svg>';
   var xs=w/(n-1);
   var pts=vals.map(function(v,i){return v===null?null:[i*xs,h-((v/10)*(h-8))-4];});
-  var gl=[2,4,6,8,10].map(function(v){var y=h-((v/10)*(h-8))-4;return '<line x1="0" y1="'+y+'" x2="'+w+'" y2="'+y+'" stroke="#2a2a45" stroke-width="0.4"/>';}).join('');
+  var gl=[2,4,6,8,10].map(function(v){var y=h-((v/10)*(h-8))-4;return'<line x1="0" y1="'+y+'" x2="'+w+'" y2="'+y+'" stroke="#2a2a45" stroke-width="0.4"/>';}).join('');
   var d='';var first=true;
-  pts.forEach(function(pt,i){
-    if(!pt)return;
-    if(first){d+='M '+pt[0]+' '+pt[1];first=false;}
-    else{var prev=null;for(var j=i-1;j>=0;j--){if(pts[j]){prev=pts[j];break;}}if(prev){var cx=(prev[0]+pt[0])/2;d+=' C '+cx+' '+prev[1]+' '+cx+' '+pt[1]+' '+pt[0]+' '+pt[1];}}
-  });
+  pts.forEach(function(pt,i){if(!pt)return;if(first){d+='M '+pt[0]+' '+pt[1];first=false;}else{var prev=null;for(var j=i-1;j>=0;j--){if(pts[j]){prev=pts[j];break;}}if(prev){var cx=(prev[0]+pt[0])/2;d+=' C '+cx+' '+prev[1]+' '+cx+' '+pt[1]+' '+pt[0]+' '+pt[1];}}});
   var fp=null,lp=null;for(var i=0;i<pts.length;i++){if(pts[i]){if(!fp)fp=pts[i];lp=pts[i];}}
   var area=fp&&lp?'<path d="'+d+' L '+lp[0]+' '+h+' L '+fp[0]+' '+h+' Z" fill="url(#grad)" opacity="0.3"/>':'';
   var dots=pts.map(function(pt){return pt?'<circle cx="'+pt[0]+'" cy="'+pt[1]+'" r="2" fill="var(--accent)" opacity="0.9"/>':'';}).join('');
-  return '<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><defs><linearGradient id="grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>'+gl+area+'<path d="'+d+'" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>'+dots+'</svg>';
+  return'<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><defs><linearGradient id="grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity="0.5"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>'+gl+area+'<path d="'+d+'" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round"/>'+dots+'</svg>';
 }
-
-function calcStreak() {
-  var s=0;var d=new Date();
-  while(true){var k=d.toISOString().slice(0,10);if(scores[k]){s++;d.setDate(d.getDate()-1);}else break;}
-  return s;
-}
+function calcStreak(){var s=0;var d=new Date();while(true){var k=d.toISOString().slice(0,10);if(scores[k]){s++;d.setDate(d.getDate()-1);}else break;}return s;}
 
 // SETTINGS
-function renderSettingsView() {
-  document.getElementById('notifTime').value = notifTime;
+function renderSettingsView(){
+  document.getElementById('notifTime').value=notifTime;
   updateNotifUI();
-  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-  document.getElementById('installBanner').classList.toggle('show', !standalone);
+  var standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;
+  document.getElementById('installBanner').classList.toggle('show',!standalone);
 }
-
-function saveNotifTime() { notifTime=document.getElementById('notifTime').value; persist(); scheduleNotif(); }
-
-function updateNotifUI() {
+function saveNotifTime(){notifTime=document.getElementById('notifTime').value;persist();scheduleNotif();}
+function updateNotifUI(){
   var btn=document.getElementById('notifBtn'),txt=document.getElementById('notifStatusText');
   if(!('Notification'in window)){btn.textContent='Ikke understøttet';btn.disabled=true;txt.textContent='Ikke understøttet';return;}
   var p=Notification.permission;
@@ -919,42 +893,33 @@ function updateNotifUI() {
   else if(p==='denied'){btn.textContent='✗ Blokeret';btn.className='notif-btn denied';txt.textContent='Tillad i browserindstillinger';}
   else{btn.textContent='Aktivér';btn.className='notif-btn';txt.textContent='Tryk for at aktivere';}
 }
-
-function requestNotifPermission() {
+function requestNotifPermission(){
   if(!('Notification'in window))return;
   Notification.requestPermission().then(function(r){updateNotifUI();if(r==='granted')scheduleNotif();});
 }
-
-function testNotification() {
+function testNotification(){
   if(Notification.permission!=='granted'){alert('Aktivér notifikationer først.');return;}
-  var title = 'LOG · Test';
-  var opts  = {body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'};
-  if(swReg){swReg.showNotification(title,opts);}
-  else{try{new Notification(title,opts);}catch(e){alert('Prøv at genindlæse appen fra hjemskærmsikonet.');}}
+  var title='LOG · Test',opts={body:'Notifikationer virker! Påmindelse kl. '+notifTime+'.'};
+  if(swReg)swReg.showNotification(title,opts);
+  else try{new Notification(title,opts);}catch(e){alert('Prøv at genindlæse fra hjemskærmsikonet.');}
 }
-
-function scheduleNotif() {
+function scheduleNotif(){
   if(notifInterval)clearInterval(notifInterval);
   if(Notification.permission!=='granted')return;
   notifInterval=setInterval(function(){
-    var n=new Date();
-    var hm=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+    var n=new Date(),hm=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
     if(hm===notifTime&&!scores[todayKey()]){
-      var title='LOG · Husk din daglige score';
-      var opts={body:'Du har ikke scoret i dag endnu.'};
-      if(swReg)swReg.showNotification(title,opts);
-      else try{new Notification(title,opts);}catch(e){}
+      var t='LOG · Husk din daglige score',o={body:'Du har ikke scoret i dag endnu.'};
+      if(swReg)swReg.showNotification(t,o);else try{new Notification(t,o);}catch(e){}
     }
   },30000);
 }
-
-function exportData() {
+function exportData(){
   var b=new Blob([JSON.stringify({entries:entries,scores:scores,cigs:cigs,sleepLog:sleepLog,params:PARAMS,version:VERSION,exported:new Date().toISOString()},null,2)],{type:'application/json'});
   var u=URL.createObjectURL(b);var a=document.createElement('a');
   a.href=u;a.download='log-'+todayKey()+'.json';a.click();URL.revokeObjectURL(u);
 }
-
-function clearAllData() {
+function clearAllData(){
   if(!confirm('Slet AL data permanent?'))return;
   entries=[];scores={};cigs={};sleepLog={};sleepState='awake';bedtime=null;
   persist();updateHeader();renderToday();
@@ -971,30 +936,23 @@ function clearAllData() {
   });
 });
 
-// Update duration when wake time changes
-document.getElementById('godmorgenWakeInput').addEventListener('change', function(){
-  updateGodmorgenDuration();
-});
+document.getElementById('godmorgenWakeInput').addEventListener('change',function(){updateGodmorgenDuration();});
 
 // SERVICE WORKER
-if('serviceWorker' in navigator) {
+if('serviceWorker'in navigator){
   navigator.serviceWorker.register('./service-worker.js').then(function(reg){
-    swReg = reg;
-    var el = document.getElementById('swStatus');
-    if(el) el.textContent = 'Service worker: aktiv ✓';
+    swReg=reg;
+    var el=document.getElementById('swStatus');
+    if(el)el.textContent='Service worker: aktiv ✓';
     scheduleNotif();
   }).catch(function(){
-    var el = document.getElementById('swStatus');
-    if(el) el.textContent = 'Service worker: ikke aktiv';
+    var el=document.getElementById('swStatus');
+    if(el)el.textContent='Service worker: ikke aktiv';
   });
 }
 
-// CLOCK — check every minute for auto-godnat and update sleep buttons
-clockInterval = setInterval(function(){
-  checkAutoGodnat();
-  renderSleepArea();
-  updateHeader();
-}, 60000);
+// CLOCK
+setInterval(function(){checkAutoGodnat();renderSleepArea();updateHeader();},60000);
 
 // INIT
 updateHeader();
